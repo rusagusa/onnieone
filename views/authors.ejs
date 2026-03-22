@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= t('Our Journalists', 'Nos Journalistes', 'Abanyamakuru Bacu') %> - ONNIEONE News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            border-bottom: 3px solid #dc2626;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .page-header h1 span {
+            color: #dc2626;
+        }
+        
+        .authors-section {
+            padding: 60px 0;
+            background: #f9fafb;
+        }
+        
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .author-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .author-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(220,38,38,0.15);
+            border-color: #dc2626;
+        }
+        
+        .author-header {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .author-avatar {
+            width: 100px;
+            height: 100px;
+            background: #dc2626;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            border: 4px solid white;
+        }
+        
+        .author-header h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .author-role {
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+        
+        .author-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #dc2626;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+        
+        .author-bio {
+            padding: 20px;
+            color: #4b5563;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            min-height: 100px;
+        }
+        
+        .author-social {
+            padding: 15px 20px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .author-social a {
+            width: 35px;
+            height: 35px;
+            background: #f3f4f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b5563;
+            transition: all 0.3s ease;
+        }
+        
+        .author-social a:hover {
+            background: #dc2626;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 1024px) {
+            .authors-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .authors-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+    <div class="page-header">
+        <div class="container">
+            <h1><span><%= t('Our', 'Nos', 'Abacu') %></span> <%= t('Journalists', 'Journalistes', 'Abanyamakuru') %></h1>
+            <p><%= t('Meet the team behind ONNIEONE News', 'Rencontrez l\'équipe derrière ONNIEONE News', 'Menya abanyamakuru ba ONNIEONE News') %></p>
+        </div>
+    </div>
+    
+    <section class="authors-section">
+        <div class="container">
+            <div class="authors-grid">
+                <% if (authors && authors.length > 0) { %>
+                    <% authors.forEach(author => { %>
+                        <a href="/author/<%= author.id %>" class="author-card">
+                            <div class="author-header">
+                                <div class="author-avatar">
+                                    <%= author.full_name ? author.full_name.charAt(0).toUpperCase() : 'J' %>
+                                </div>
+                                <h3><%= author.full_name %></h3>
+                                <div class="author-role">
+                                    <%= author.role ? author.role.replace('_', ' ').toUpperCase() : 'JOURNALIST' %>
+                                </div>
+                            </div>
+                            <div class="author-stats">
+                                <div class="stat">
+                                    <div class="stat-number"><%= author.article_count || 0 %></div>
+                                    <div class="stat-label"><%= t('Articles', 'Articles', 'Ingingo') %></div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-number"><%= author.total_views || 0 %></div>
+                                    <div class="stat-label"><%= t('Views', 'Vues', 'Ababirebye') %></div>
+                                </div>
+                            </div>
+                            <div class="author-bio">
+                                <%= author.bio || t('Experienced journalist dedicated to bringing you accurate news.', 'Journaliste expérimenté dédié à vous apporter des informations précises.', 'Umunyamakuru ufite ubunararibone utanga amakuru y\'ukuri.') %>
+                            </div>
+                            <div class="author-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </a>
+                    <% }); %>
+                <% } else { %>
+                    <p style="text-align: center; color: #6b7280; grid-column: 1/-1;">
+                        <%= t('No journalists found', 'Aucun journaliste trouvé', 'Nta munyamakuru wabonetse') %>
+                    </p>
+                <% } %>
+            </div>
+        </div>
+    </section>
+    
+    <%- include('partials/footer') %>
+</body>
+</html>

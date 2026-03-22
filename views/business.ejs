@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business News - ONNIEONE News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/category.css">
+</head>
+<body>
+    <!-- Professional Header - Black Background -->
+<header style="background: #000000; border-bottom: 3px solid #dc2626; position: sticky; top: 0; z-index: 1000;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+        <a href="/" style="font-size: 24px; font-weight: bold; color: #ffffff; text-decoration: none;">
+            <span style="color: #dc2626;">ONNIEONE</span> NEWS
+        </a>
+        <nav style="display: flex; gap: 30px; align-items: center;">
+            <a href="/" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-home" style="color: #dc2626;"></i> Home
+            </a>
+            <a href="/categories" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-list" style="color: #dc2626;"></i> Categories
+            </a>
+            <a href="/regions" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-globe" style="color: #dc2626;"></i> Regions
+            </a>
+            <a href="/trending" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-fire" style="color: #dc2626;"></i> Trending
+            </a>
+            <a href="/region/rwanda" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-map-marker-alt" style="color: #dc2626;"></i> Rwanda
+            </a>
+            <form action="/search" method="GET" style="display: flex; align-items: center; background: #1a1a1a; border-radius: 30px; padding: 8px 15px; border: 1px solid #333;">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                <input type="text" name="q" placeholder="Search news..." style="background: transparent; border: none; color: #ffffff; padding: 5px; outline: none; width: 200px; font-size: 14px;">
+                <button type="submit" style="background: transparent; border: none; color: #dc2626; cursor: pointer;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </nav>
+    </div>
+</header>
+
+<style>
+    nav a:hover {
+        color: #dc2626 !important;
+    }
+    nav a:hover i {
+        transform: scale(1.1);
+        transition: none;
+    }
+    @media (max-width: 768px) {
+        header > div {
+            flex-direction: column;
+            gap: 15px;
+        }
+        nav {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+</style>
+
+        <div class="category-header" style="background: #000000 !important; border-bottom: 4px solid #dc2626; padding: 80px 0; text-align: center; position: relative;">
+        <div class="container">
+            <div class="category-icon" style="font-size: 80px; margin-bottom: 25px; color: #dc2626;">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h1 style="font-size: 48px; font-weight: 800; margin-bottom: 20px; color: #ffffff; text-shadow: 2px 2px 0 #dc2626;">📊 BUSINESS TODAY 📊</h1>
+            <p style="font-size: 18px; max-width: 700px; margin: 0 auto; background: rgba(255,255,255,0.1); padding: 15px 35px; border-radius: 50px; color: #ffffff; border: 1px solid #dc2626; display: inline-block;">Market updates, financial news, and business insights</p>
+        </div>
+    </div>
+            <h1>📊 BUSINESS TODAY 📊</h1>
+            <p>Market updates, financial news, and business insights</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-section" style="background: #ffffff;">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">2,345</div>
+                    <div class="stat-label">Companies</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₣12.5B</div>
+                    <div class="stat-label">Market Cap</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">Deals Today</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8.4%</div>
+                    <div class="stat-label">GDP Growth</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ticker" style="background: #000000;">
+        <div class="container">
+            <div class="ticker-wrap">
+                <div class="ticker-move">
+                    <span class="ticker-item"><i class="fas fa-chart-line"></i> NASDAQ <span class="positive">▲ 1.2%</span></span>
+                    <span class="ticker-item"><i class="fas fa-chart-line"></i> S&P 500 <span class="positive">▲ 0.8%</span></span>
+                    <span class="ticker-item"><i class="fas fa-chart-line"></i> DOW JONES <span class="negative">▼ 0.3%</span></span>
+                    <span class="ticker-item"><i class="fas fa-chart-line"></i> BTC <span class="positive">▲ 2.5%</span></span>
+                    <span class="ticker-item"><i class="fas fa-chart-line"></i> ETH <span class="positive">▲ 1.8%</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Market Grid -->
+    <div class="container" style="margin-top: 40px;">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-chart-pie"></i> Market Overview</h2>
+            <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="market-grid">
+            <div class="market-card" style="background: #ffffff;">
+                <div class="market-label">RWF/USD</div>
+                <div class="market-value">1,145.50</div>
+                <div class="market-change positive">▲ 0.5%</div>
+            </div>
+            <div class="market-card" style="background: #ffffff;">
+                <div class="market-label">RWF/EUR</div>
+                <div class="market-value">1,234.75</div>
+                <div class="market-change negative">▼ 0.2%</div>
+            </div>
+            <div class="market-card" style="background: #ffffff;">
+                <div class="market-label">RWF/GBP</div>
+                <div class="market-value">1,456.25</div>
+                <div class="market-change positive">▲ 0.3%</div>
+            </div>
+            <div class="market-card" style="background: #ffffff;">
+                <div class="market-label">RWF/KES</div>
+                <div class="market-value">8.45</div>
+                <div class="market-change positive">▲ 0.1%</div>
+            </div>
+            <div class="market-card" style="background: #ffffff;">
+                <div class="market-label">Gold (oz)</div>
+                <div class="market-value">$2,345</div>
+                <div class="market-change positive">▲ 0.7%</div>
+            </div>
+            <div class="market-card" style="background: #ffffff;">
+                <div class="market-label">Oil (bbl)</div>
+                <div class="market-value">$78.50</div>
+                <div class="market-change negative">▼ 0.4%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="main-content">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-newspaper"></i> Latest Business News</h2>
+                    <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="news-grid">
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Economy</span>
+                            <h3 class="news-title"><a href="#">Rwanda's Economy Grows 8.4% in First Quarter</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2 hours ago</span>
+                                <span><i class="far fa-eye"></i> 2.1k views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Technology</span>
+                            <h3 class="news-title"><a href="#">New Tech Hub Launches in Kigali Innovation City</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 5 hours ago</span>
+                                <span><i class="far fa-eye"></i> 1.5k views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Banking</span>
+                            <h3 class="news-title"><a href="#">Regional Bank Merger Creates Largest Financial Group</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 1 day ago</span>
+                                <span><i class="far fa-eye"></i> 3.2k views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1559526324-593bc073d938?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Investment</span>
+                            <h3 class="news-title"><a href="#">Foreign Direct Investment Reaches Record High</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2 days ago</span>
+                                <span><i class="far fa-eye"></i> 2.8k views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-coins"></i>
+                        <h3>Currency Exchange</h3>
+                    </div>
+                    
+                    <div class="currency-item">
+                        <span class="currency-name">USD/RWF</span>
+                        <span class="currency-rate">1,145.50</span>
+                    </div>
+                    <div class="currency-item">
+                        <span class="currency-name">EUR/RWF</span>
+                        <span class="currency-rate">1,234.75</span>
+                    </div>
+                    <div class="currency-item">
+                        <span class="currency-name">GBP/RWF</span>
+                        <span class="currency-rate">1,456.25</span>
+                    </div>
+                    <div class="currency-item">
+                        <span class="currency-name">KES/RWF</span>
+                        <span class="currency-rate">8.45</span>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Top Gainers</h3>
+                    </div>
+                    
+                    <div class="list-item">
+                        <span class="item-rank">1</span>
+                        <div class="item-info">
+                            <div class="item-title">BK Group</div>
+                            <div class="item-subtitle">+5.2%</div>
+                        </div>
+                        <span class="item-value">₣45.6</span>
+                    </div>
+                    
+                    <div class="list-item">
+                        <span class="item-rank">2</span>
+                        <div class="item-info">
+                            <div class="item-title">MTN Rwanda</div>
+                            <div class="item-subtitle">+3.8%</div>
+                        </div>
+                        <span class="item-value">₣23.4</span>
+                    </div>
+                    
+                    <div class="list-item">
+                        <span class="item-rank">3</span>
+                        <div class="item-info">
+                            <div class="item-title">I&M Bank</div>
+                            <div class="item-subtitle">+2.4%</div>
+                        </div>
+                        <span class="item-value">₣32.1</span>
+                    </div>
+                    
+                    <div class="list-item">
+                        <span class="item-rank">4</span>
+                        <div class="item-info">
+                            <div class="item-title">Equity Bank</div>
+                            <div class="item-subtitle">+1.9%</div>
+                        </div>
+                        <span class="item-value">₣28.7</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Footer - Black, White, Red, Gray -->
+<footer style="background: #000000; color: #ffffff; padding: 60px 0 30px; margin-top: 60px; border-top: 4px solid #dc2626;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        <!-- Footer Grid -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 40px;">
+            <!-- About Column -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-chart-line"></i> Business
+                </h3>
+                <p style="color: #9ca3af; line-height: 1.8; margin-bottom: 20px;">Your trusted source for market updates, financial news, and business insights from Rwanda and around the world.</p>
+                <div style="display: flex; gap: 15px;">
+                    <a href="#" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: all 0.3s;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: all 0.3s;">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: all 0.3s;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@onnieoneEntertainment" target="_blank" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: all 0.3s;">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-link"></i> Quick Links
+                </h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 12px;"><a href="/trending" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-fire" style="color: #dc2626; font-size: 12px;"></i> Trending Now</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/categories" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-list" style="color: #dc2626; font-size: 12px;"></i> All Categories</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/regions" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-globe" style="color: #dc2626; font-size: 12px;"></i> Regions</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/about" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-info-circle" style="color: #dc2626; font-size: 12px;"></i> About Us</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/contact" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-envelope" style="color: #dc2626; font-size: 12px;"></i> Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Markets -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-chart-pie"></i> Markets
+                </h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-dollar-sign" style="color: #dc2626; font-size: 12px;"></i> Stocks</a></li>
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-coins" style="color: #dc2626; font-size: 12px;"></i> Currencies</a></li>
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-chart-bar" style="color: #dc2626; font-size: 12px;"></i> Commodities</a></li>
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-bitcoin" style="color: #dc2626; font-size: 12px;"></i> Crypto</a></li>
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-building" style="color: #dc2626; font-size: 12px;"></i> Real Estate</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-envelope"></i> Newsletter
+                </h3>
+                <p style="color: #9ca3af; margin-bottom: 15px;">Get daily market updates in your inbox!</p>
+                <form style="display: flex; background: #1a1a1a; border-radius: 30px; padding: 5px; border: 1px solid #333;">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                    <input type="email" placeholder="Your email" style="flex: 1; background: transparent; border: none; padding: 12px 15px; color: #ffffff; outline: none;">
+                    <button type="submit" style="background: #dc2626; color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: background 0.3s;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div style="text-align: center; padding-top: 30px; border-top: 1px solid #333;">
+            <p style="color: #9ca3af; font-size: 14px;">
+                &copy; 2026 <span style="color: #dc2626;">ONNIEONE NEWS</span>. All rights reserved. | 
+                <a href="/privacy" style="color: #9ca3af; text-decoration: none; transition: color 0.3s;">Privacy</a> | 
+                <a href="/terms" style="color: #9ca3af; text-decoration: none; transition: color 0.3s;">Terms</a> | 
+                <a href="/advertise" style="color: #9ca3af; text-decoration: none; transition: color 0.3s;">Advertise</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer a:hover {
+        color: #dc2626 !important;
+    }
+    footer .social-links a:hover {
+        background: #dc2626 !important;
+        color: white !important;
+        transform: translateY(-3px);
+    }
+    @media (max-width: 768px) {
+        footer > div > div:first-child {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+    }
+    @media (max-width: 480px) {
+        footer > div > div:first-child {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+</body>
+</html>

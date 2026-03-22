@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - ONNIEONE News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+        
+        .page-header {
+            background: linear-gradient(135deg, #000000 0%, #dc2626 70%, #ffffff 100%);
+            color: white; padding: 60px 0; text-align: center;
+        }
+        .page-header i { font-size: 50px; margin-bottom: 15px; }
+        .page-header h1 { font-size: 36px; text-shadow: 2px 2px 0 #dc2626; }
+        
+        .page-content {
+            background: white; border-radius: 16px; padding: 40px; margin: 40px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .page-content h2 { color: #1a1a1a; margin: 30px 0 15px; border-bottom: 3px solid #dc2626; padding-bottom: 10px; }
+        .page-content h3 { color: #dc2626; margin: 20px 0 10px; }
+        .page-content p { color: #495057; line-height: 1.8; margin-bottom: 15px; }
+        .page-content ul { margin-left: 20px; margin-bottom: 20px; }
+        .page-content li { color: #495057; margin: 8px 0; }
+        
+        .btn-primary {
+            background: #dc2626; color: white; border: none; padding: 12px 30px;
+            border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s;
+        }
+        .btn-primary:hover { background: #000; transform: translateY(-2px); }
+        
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 28px; }
+            .page-content { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <div class="page-header">
+        <div class="container">
+            <i class="fas fa-shield-alt"></i>
+            <h1>Privacy Policy</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="page-content">
+            
+            <h2>Privacy Policy</h2>
+            <p>Last updated: February 2026</p>
+            
+            <h3>1. Information We Collect</h3>
+            <p>We collect information you provide directly to us, such as when you create an account, subscribe to our newsletter, or contact us for support. This may include your name, email address, and any other information you choose to provide.</p>
+            
+            <h3>2. How We Use Your Information</h3>
+            <p>We use the information we collect to:</p>
+            <ul>
+                <li>Provide, maintain, and improve our services</li>
+                <li>Send you news updates and promotional content</li>
+                <li>Respond to your comments and questions</li>
+                <li>Monitor and analyze trends and usage</li>
+            </ul>
+            
+            <h3>3. Information Sharing</h3>
+            <p>We do not share your personal information with third parties except in the following circumstances:</p>
+            <ul>
+                <li>With your consent</li>
+                <li>To comply with legal obligations</li>
+                <li>To protect and defend our rights and property</li>
+            </ul>
+            
+            <h3>4. Data Security</h3>
+            <p>We take reasonable measures to help protect your personal information from loss, theft, misuse, and unauthorized access.</p>
+        
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

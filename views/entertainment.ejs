@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entertainment News - ONNIEONE News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/category.css">
+</head>
+<body>
+    <!-- Professional Header - Black Background -->
+<header style="background: #000000; border-bottom: 3px solid #dc2626; position: sticky; top: 0; z-index: 1000;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+        <a href="/" style="font-size: 24px; font-weight: bold; color: #ffffff; text-decoration: none;">
+            <span style="color: #dc2626;">ONNIEONE</span> NEWS
+        </a>
+        <nav style="display: flex; gap: 30px; align-items: center;">
+            <a href="/" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-home" style="color: #dc2626;"></i> Home
+            </a>
+            <a href="/categories" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-list" style="color: #dc2626;"></i> Categories
+            </a>
+            <a href="/regions" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-globe" style="color: #dc2626;"></i> Regions
+            </a>
+            <a href="/trending" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-fire" style="color: #dc2626;"></i> Trending
+            </a>
+            <a href="/region/rwanda" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-map-marker-alt" style="color: #dc2626;"></i> Rwanda
+            </a>
+            <form action="/search" method="GET" style="display: flex; align-items: center; background: #1a1a1a; border-radius: 30px; padding: 8px 15px; border: 1px solid #333;">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                <input type="text" name="q" placeholder="Search news..." style="background: transparent; border: none; color: #ffffff; padding: 5px; outline: none; width: 200px; font-size: 14px;">
+                <button type="submit" style="background: transparent; border: none; color: #dc2626; cursor: pointer;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </nav>
+    </div>
+</header>
+
+<style>
+    nav a:hover {
+        color: #dc2626 !important;
+    }
+    nav a:hover i {
+        
+        transition: none;
+    }
+    @media (max-width: 768px) {
+        header > div {
+            flex-direction: column;
+            gap: 15px;
+        }
+        nav {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+</style>
+
+        <div class="category-header" style="background: #000000 !important; border-bottom: 4px solid #dc2626; padding: 80px 0; text-align: center; position: relative;">
+        <div class="container">
+            <div class="category-icon" style="font-size: 80px; margin-bottom: 25px; color: #dc2626;">
+                <i class="fas fa-film"></i>
+            </div>
+            <h1 style="font-size: 48px; font-weight: 800; margin-bottom: 20px; color: #ffffff; text-shadow: 2px 2px 0 #dc2626;">🎬 ENTERTAINMENT HUB 🎬</h1>
+            <p style="font-size: 18px; max-width: 700px; margin: 0 auto; background: rgba(255,255,255,0.1); padding: 15px 35px; border-radius: 50px; color: #ffffff; border: 1px solid #dc2626; display: inline-block;">Movies, music, celebrity news, and showbiz updates</p>
+        </div>
+    </div>
+            <h1>🎬 ENTERTAINMENT HUB 🎬</h1>
+            <p>Movies, music, celebrity news, and showbiz updates</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-section" style="background: #ffffff;">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">New Movies</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">89</div>
+                    <div class="stat-label">TV Shows</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">234</div>
+                    <div class="stat-label">Music Albums</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1.2k</div>
+                    <div class="stat-label">Celebrity News</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="main-content">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-fire"></i> Trending Movies</h2>
+                    <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="news-grid">
+                    <div class="movie-card">
+                        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500" class="movie-poster">
+                        <div class="movie-info">
+                            <div class="movie-title">Black Panther: Wakanda Forever</div>
+                            <div class="movie-rating">★★★★★</div>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2026</span>
+                                <span><i class="fas fa-ticket-alt"></i> Now Showing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-card">
+                        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500" class="movie-poster">
+                        <div class="movie-info">
+                            <div class="movie-title">Dune: Part Two</div>
+                            <div class="movie-rating">★★★★☆</div>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2026</span>
+                                <span><i class="fas fa-ticket-alt"></i> Coming Soon</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-card">
+                        <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=500" class="movie-poster">
+                        <div class="movie-info">
+                            <div class="movie-title">Mission: Impossible 8</div>
+                            <div class="movie-rating">★★★★★</div>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2026</span>
+                                <span><i class="fas fa-ticket-alt"></i> Now Showing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-card">
+                        <img src="https://images.unsplash.com/photo-1542204160-126bf8827580?w=500" class="movie-poster">
+                        <div class="movie-info">
+                            <div class="movie-title">The Batman: Part II</div>
+                            <div class="movie-rating">★★★★☆</div>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2026</span>
+                                <span><i class="fas fa-ticket-alt"></i> Coming Soon</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Top Music Charts</h3>
+                    </div>
+                    <div class="list-item">
+                        <span class="item-rank">1</span>
+                        <div class="item-info">
+                            <div class="item-title">Cry Me a River</div>
+                            <div class="item-subtitle">Justin Bieber</div>
+                        </div>
+                        <span class="item-value">#1</span>
+                    </div>
+                    <div class="list-item">
+                        <span class="item-rank">2</span>
+                        <div class="item-info">
+                            <div class="item-title">Flowers</div>
+                            <div class="item-subtitle">Miley Cyrus</div>
+                        </div>
+                        <span class="item-value">#2</span>
+                    </div>
+                    <div class="list-item">
+                        <span class="item-rank">3</span>
+                        <div class="item-info">
+                            <div class="item-title">Last Night</div>
+                            <div class="item-subtitle">Morgan Wallen</div>
+                        </div>
+                        <span class="item-value">#3</span>
+                    </div>
+                    <div class="list-item">
+                        <span class="item-rank">4</span>
+                        <div class="item-info">
+                            <div class="item-title">What Was I Made For</div>
+                            <div class="item-subtitle">Billie Eilish</div>
+                        </div>
+                        <span class="item-value">#4</span>
+                    </div>
+                    <div class="list-item">
+                        <span class="item-rank">5</span>
+                        <div class="item-info">
+                            <div class="item-title">Calm Down</div>
+                            <div class="item-subtitle">Rema</div>
+                        </div>
+                        <span class="item-value">#5</span>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-star"></i>
+                        <h3>Celebrity News</h3>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-info">
+                            <div class="item-title">Burna Boy Wins Grammy</div>
+                            <div class="item-subtitle">2 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-info">
+                            <div class="item-title">Rihanna's New Album Drops</div>
+                            <div class="item-subtitle">5 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-info">
+                            <div class="item-title">African Film Festival Kicks Off</div>
+                            <div class="item-subtitle">1 day ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Footer - Black, White, Red, Gray -->
+<footer style="background: #000000; color: #ffffff; padding: 60px 0 30px; margin-top: 60px; border-top: 4px solid #dc2626;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        <!-- Footer Grid -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 40px;">
+            <!-- About Column -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-film"></i> Entertainment
+                </h3>
+                <p style="color: #9ca3af; line-height: 1.8; margin-bottom: 20px;">Your ultimate destination for movies, music, celebrity news, and entertainment updates.</p>
+                <div style="display: flex; gap: 15px;">
+                    <a href="#" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: none;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: none;">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: none;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@onnieoneEntertainment" target="_blank" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: none;">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-link"></i> Quick Links
+                </h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 12px;"><a href="/trending" style="color: #9ca3af; text-decoration: none; transition: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-fire" style="color: #dc2626; font-size: 12px;"></i> Trending Now</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/categories" style="color: #9ca3af; text-decoration: none; transition: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-list" style="color: #dc2626; font-size: 12px;"></i> All Categories</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/regions" style="color: #9ca3af; text-decoration: none; transition: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-globe" style="color: #dc2626; font-size: 12px;"></i> Regions</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/about" style="color: #9ca3af; text-decoration: none; transition: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-info-circle" style="color: #dc2626; font-size: 12px;"></i> About Us</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/contact" style="color: #9ca3af; text-decoration: none; transition: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-envelope" style="color: #dc2626; font-size: 12px;"></i> Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Categories -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-tags"></i> Categories
+                </h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 12px;"><a href="/category/movies" style="color: #9ca3af; text-decoration: none; transition: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-film" style="color: #dc2626; font-size: 12px;"></i> Movies</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/category/music" style="color: #9ca3af; text-decoration: none; transition: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-music" style="color: #dc2626; font-size: 12px;"></i> Music</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/category/celebrity" style="color: #9ca3af; text-decoration: none; transition: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-star" style="color: #dc2626; font-size: 12px;"></i> Celebrity</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/category/tv-shows" style="color: #9ca3af; text-decoration: none; transition: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-tv" style="color: #dc2626; font-size: 12px;"></i> TV Shows</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/category/awards" style="color: #9ca3af; text-decoration: none; transition: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-trophy" style="color: #dc2626; font-size: 12px;"></i> Awards</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-envelope"></i> Newsletter
+                </h3>
+                <p style="color: #9ca3af; margin-bottom: 15px;">Subscribe to get entertainment updates</p>
+                <form style="display: flex; background: #1a1a1a; border-radius: 30px; padding: 5px; border: 1px solid #333;">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                    <input type="email" placeholder="Your email" style="flex: 1; background: transparent; border: none; padding: 12px 15px; color: #ffffff; outline: none;">
+                    <button type="submit" style="background: #dc2626; color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: none;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div style="text-align: center; padding-top: 30px; border-top: 1px solid #333;">
+            <p style="color: #9ca3af; font-size: 14px;">
+                &copy; 2026 <span style="color: #dc2626;">ONNIEONE NEWS</span>. All rights reserved. | 
+                <a href="/privacy" style="color: #9ca3af; text-decoration: none; transition: none;">Privacy</a> | 
+                <a href="/terms" style="color: #9ca3af; text-decoration: none; transition: none;">Terms</a> | 
+                <a href="/advertise" style="color: #9ca3af; text-decoration: none; transition: none;">Advertise</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer a:hover {
+        color: #dc2626 !important;
+    }
+    footer .social-links a:hover {
+        background: #dc2626 !important;
+        color: white !important;
+        transform: translateY(-3px);
+    }
+    @media (max-width: 768px) {
+        footer > div > div:first-child {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+    }
+    @media (max-width: 480px) {
+        footer > div > div:first-child {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+</body>
+</html>

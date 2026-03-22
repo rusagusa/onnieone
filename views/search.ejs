@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - ONNIEONE News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .page-header {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1600');
+            background-size: cover;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .search-query {
+            color: #dc2626;
+        }
+        .results-count {
+            margin: 30px 0;
+            color: #6c757d;
+        }
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 30px 0 60px;
+        }
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 480px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .no-results {
+            text-align: center;
+            padding: 60px 0;
+        }
+        .no-results i {
+            font-size: 4rem;
+            color: #dc2626;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Search Results for "<span class="search-query"><%= query %></span>"</h1>
+            <p><%= results.length %> articles found</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <% if (results && results.length > 0) { %>
+            <div class="results-grid">
+                <% results.forEach(item => { %>
+                    <div class="news-card">
+                        <img src="<%= item.image || 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=500' %>" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category"><%= item.category_name || 'News' %></span>
+                            <h3 class="news-title">
+                                <a href="/article/<%= item.id %>"><%= item.title %></a>
+                            </h3>
+                            <p><%= item.summary ? item.summary.substring(0, 100) + '...' : '' %></p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> <%= new Date(item.published_at).toLocaleDateString() %></span>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div class="no-results">
+                <i class="fas fa-search"></i>
+                <h2>No results found</h2>
+                <p>We couldn't find any articles matching "<%= query %>"</p>
+                <a href="/" class="btn-primary" style="margin-top: 20px;">Back to Home</a>
+            </div>
+        <% } %>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

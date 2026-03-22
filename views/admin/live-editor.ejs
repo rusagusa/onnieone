@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="<%= settings.site_description || 'Latest news and updates from Rwanda and around the world' %>">
+    <title>LIVE EDITOR - <%= settings.site_name || 'ONNIEONE NEWS' %>
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/style-homepage.css">
+    <style>
+        /* Live Editor specific styles */
+        .live-editor-bar {
+            background: #dc2626;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .live-editor-bar a {
+            color: white;
+            text-decoration: none;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        /* Make editable elements obvious on hover */
+        [contenteditable="true"] {
+            outline: none;
+            transition: all 0.2s;
+            cursor: text;
+        }
+
+        [contenteditable="true"]:hover {
+            box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.5);
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 3px;
+        }
+
+        [contenteditable="true"]:focus {
+            box-shadow: inset 0 0 0 2px #3b82f6;
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+        }
+
+        /* Image Hover Edit */
+        .editable-image {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .editable-image::after {
+            content: '\f030  Click to change image';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+
+        .editable-image:hover::after {
+            opacity: 1;
+        }
+
+        /* Notification Toast */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 16px;
+            position: fixed;
+            z-index: 10000;
+            right: 30px;
+            bottom: 30px;
+            font-size: 14px;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="live-editor-bar">
+        <span><i class="fas fa-edit"></i> LIVE EDITOR MODE - Elements are editable. Changes save automatically.</span>
+        <a href="/admin/dashboard"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </div>
+
+    <!-- Hidden form for image uploads -->
+    <input type="file" id="imageUploader" style="display: none;" accept="image/*">
+    <div id="toast">Changes saved successfully!</div>
+    <input type="hidden" id="csrfToken" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+
+    <!-- TOP HEADER SECTION - BLACK BACKGROUND -->
+    <div class="top-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="real-time">
+                    <span class="live-badge"><i class="fas fa-circle"></i> LIVE</span>
+                    <div class="ticker">
+                        <div class="ticker-content">
+                            <% if (updates && updates.length> 0) {
+                                updates.forEach(update => { %>
+                                <span class="ticker-item" data-type="ticker" data-id="<%= update.id %>"
+                                    data-field="content_en" contenteditable="true">
+                                    <i class="fas fa-bolt"></i>
+                                    <%= update.content_en %>
+                                </span>
+                                <% }); } else { %>
+                                    <span class="ticker-item"><i class="fas fa-bolt"></i> Breaking: Rwanda launches new
+                                        tourism initiative</span>
+                                    <% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-bar">
+                    <form action="#" onsubmit="return false;" style="display: flex; width: 100%;">
+                        <input type="text" placeholder="Search disabled in edit mode..." disabled>
+                        <button type="button" disabled><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGO & SPONSOR SECTION -->
+    <div class="logo-section">
+        <div class="container">
+            <div class="logo-grid">
+                <div class="logo-box">
+                    <img class="editable-image" data-type="site_setting" data-key="site_logo"
+                        src="/images/onieone-logo.png" alt="ONNIEONE NEWS">
+                </div>
+                <div class="logo-box">
+                    <div class="main-logo" data-type="site_setting" data-key="site_name" contenteditable="true">
+                        <%= settings.site_name || 'ONNIEONE NEWS' %>
+                    </div>
+                </div>
+                <div class="logo-box">
+                    <div class="sponsor-banner">
+                        <% if (ads && ads.find(a=> a.location === 'header')) { %>
+                            <img class="editable-image" data-type="ad"
+                                data-id="<%= ads.find(a => a.location === 'header').id %>"
+                                src="<%= ads.find(a => a.location === 'header').image_url %>" alt="Sponsor">
+                            <% } else { %>
+                                <div class="editable-image placeholder-ad" data-type="new_ad" data-loc="header"
+                                    style="background:#f3f4f6; width:100%; height:100%; display:flex; align-items:center; justify-content:center; border:1px dashed #cbd5e1;">
+                                    Click to add Header Ad</div>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION CATEGORIES -->
+    <nav class="nav-section">
+        <div class="container">
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="#" onclick="return false;"><i class="fas fa-home"></i> Ahabanza</a></li>
+                <% if (categories && categories.length> 0) {
+                    categories.filter(c => c.slug !== 'home' && c.is_active).sort((a,b) => a.order_position -
+                    b.order_position).forEach(cat => { %>
+                    <li class="nav-item">
+                        <a href="#" onclick="return false;">
+                            <i class="<%= cat.icon %>"></i>
+                            <span data-type="category" data-id="<%= cat.id %>" data-field="name_en"
+                                contenteditable="true">
+                                <%= cat.name_en %>
+                            </span>
+                        </a>
+                    </li>
+                    <% }); } %>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- BREAKING NEWS SECTION - 3 COLUMN -->
+    <div class="container">
+        <div class="breaking-section">
+            <div class="slider-container">
+                <div class="slider-header"><i class="fas fa-bolt"></i> BREAKING NEWS</div>
+                <div class="slider-content">
+                    <% if (breakingNews && breakingNews.length> 0) {
+                        breakingNews.forEach((news, index) => { %>
+                        <div class="slide <%= index === 0 ? 'active' : '' %>" style="display:block; opacity:1;">
+                            <img class="editable-image" data-type="article_image" data-id="<%= news.article_id %>"
+                                src="<%= news.image_url || 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=500' %>"
+                                alt="News Image">
+                            <div class="slide-info">
+                                <h3 data-type="article" data-id="<%= news.article_id %>" data-field="title_en"
+                                    contenteditable="true">
+                                    <%= news.title_en %>
+                                </h3>
+                            </div>
+                        </div>
+                        <% }); } %>
+                </div>
+            </div>
+
+            <!-- One Featured Big Article -->
+            <div class="featured-article">
+                <% if (featuredArticle) { %>
+                    <img class="editable-image" data-type="article_image" data-id="<%= featuredArticle.id %>"
+                        src="<%= featuredArticle.image_url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=500' %>"
+                        alt="Featured">
+                    <div class="featured-content">
+                        <span class="featured-badge"><i class="fas fa-star"></i> FEATURED</span>
+                        <h3 class="featured-title" data-type="article" data-id="<%= featuredArticle.id %>"
+                            data-field="title_en" contenteditable="true">
+                            <%= featuredArticle.title_en %>
+                        </h3>
+                        <a href="#" onclick="return false;" class="btn-read-more"
+                            style="display:inline-block; margin-top:15px; background:#dc2626; color:white; padding:8px 15px; border-radius:5px; text-decoration:none; font-weight:bold; font-size:0.9rem;">READ
+                            MORE</a>
+                    </div>
+                    <% } %>
+            </div>
+
+            <div class="ad-section">
+                <% if (ads && ads.find(a=> a.location === 'breaking')) { %>
+                    <img class="editable-image" data-type="ad"
+                        data-id="<%= ads.find(a => a.location === 'breaking').id %>"
+                        src="<%= ads.find(a => a.location === 'breaking').image_url %>" alt="Ad">
+                    <% } else { %>
+                        <div class="editable-image placeholder-ad" data-type="new_ad" data-loc="breaking"
+                            style="background:#f3f4f6; width:300px; height:250px; display:flex; align-items:center; justify-content:center; border:1px dashed #cbd5e1;">
+                            Click to Add Ad</div>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT - 4 COLUMN LAYOUT -->
+    <div class="container">
+        <div class="main-grid">
+            <!-- Column 1: Latest Articles List -->
+            <div class="column">
+                <h3 class="column-title"><i class="fas fa-clock"></i> Latest Articles</h3>
+                <ul class="article-list">
+                    <% if (articles && articles.length> 0) {
+                        articles.slice(0, 8).forEach(article => { %>
+                        <li class="article-item">
+                            <h4 data-type="article" data-id="<%= article.id %>" data-field="title_en"
+                                contenteditable="true">
+                                <%= article.title_en %>
+                            </h4>
+                            <a href="#" onclick="return false;"
+                                style="color:#dc2626; font-size:0.85rem; text-decoration:none; font-weight:600; display:block; margin-top:5px;">Read
+                                More <i class="fas fa-arrow-right" style="font-size:0.7rem;"></i></a>
+                        </li>
+                        <% }); } %>
+                </ul>
+            </div>
+
+            <!-- Column 2: Auction News -->
+            <div class="column">
+                <h3 class="column-title"><i class="fas fa-gavel"></i> Auction News</h3>
+                <% if (auctions && auctions.length> 0) {
+                    auctions.forEach(auction => { %>
+                    <div class="auction-item">
+                        <h4 data-type="auction" data-id="<%= auction.id %>" data-field="title_en"
+                            contenteditable="true">
+                            <%= auction.title_en %>
+                        </h4>
+                        <div class="auction-price" data-type="auction" data-id="<%= auction.id %>" data-field="price"
+                            contenteditable="true">
+                            <%= auction.price || 'Price on request' %>
+                        </div>
+                        <div class="auction-location" data-type="auction" data-id="<%= auction.id %>"
+                            data-field="location" contenteditable="true">
+                            <%= auction.location || 'Kigali' %>
+                        </div>
+                    </div>
+                    <% }); } %>
+            </div>
+
+            <!-- Column 3: Big News Today & Announcements -->
+            <div class="column">
+                <h3 class="column-title"><i class="fas fa-calendar-day"></i> Big News Today</h3>
+                <div class="big-news">
+                    <% if (bigNews) { %>
+                        <img class="editable-image" data-type="article_image" data-id="<%= bigNews.id %>"
+                            src="<%= bigNews.image_url || 'https://images.unsplash.com/photo-1559598467-f8b76c8155d0?w=500' %>"
+                            alt="Big News">
+                        <div class="big-news-overlay">
+                            <h3 data-type="article" data-id="<%= bigNews.id %>" data-field="title_en"
+                                contenteditable="true">
+                                <%= bigNews.title_en %>
+                            </h3>
+                        </div>
+                        <% } %>
+                </div>
+
+                <h3 class="column-title" style="margin-top:20px;"><i class="fas fa-bullhorn"></i> Announcements</h3>
+                <% if (announcements && announcements.length> 0) {
+                    announcements.forEach(ann => { %>
+                    <div class="announcement-item">
+                        <h4 data-type="announcement" data-id="<%= ann.id %>" data-field="title_en"
+                            contenteditable="true">
+                            <%= ann.title_en %>
+                        </h4>
+                        <p data-type="announcement" data-id="<%= ann.id %>" data-field="content_en"
+                            contenteditable="true">
+                            <%= ann.content_en %>
+                        </p>
+                    </div>
+                    <% }); } %>
+            </div>
+
+            <!-- Column 4: History -->
+            <div class="column">
+                <h3 class="column-title"><i class="fas fa-history"></i> Today in History</h3>
+                <% if (history && history.length> 0) {
+                    history.forEach(item => { %>
+                    <div class="history-item">
+                        <div class="history-year" data-type="history" data-id="<%= item.id %>" data-field="year"
+                            contenteditable="true">
+                            <%= item.year %>
+                        </div>
+                        <div class="history-event" data-type="history" data-id="<%= item.id %>" data-field="event_en"
+                            contenteditable="true">
+                            <%= item.event_en %>
+                        </div>
+                    </div>
+                    <% }); } %>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4 data-type="site_setting" data-key="site_name" contenteditable="true">
+                        <%= settings.site_name || 'ONNIEONE NEWS' %>
+                    </h4>
+                    <p data-type="site_setting" data-key="site_description" contenteditable="true">
+                        <%= settings.site_description || 'Rwanda\' s Premier News Platform' %>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 <%= settings.site_name || 'ONNIEONE NEWS' %>. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/live-editor.js"></script>
+</body>
+
+</html>

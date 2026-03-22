@@ -1,0 +1,157 @@
+<div class="newsletter-signup">
+    <div class="newsletter-icon">
+        <i class="fas fa-envelope-open-text"></i>
+    </div>
+    <h3><%= t('Subscribe to our Newsletter', 'Abonnez-vous à notre newsletter', 'Iyandikishe kuri newsletter yacu') %></h3>
+    <p><%= t('Get the latest news delivered to your inbox', 'Recevez les dernières nouvelles dans votre boîte mail', 'Akira amakuru mashya muri imeri yawe') %></p>
+    
+    <form action="/newsletter/subscribe" method="POST" class="newsletter-form">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <input type="text" name="name" placeholder="<%= t('Your name', 'Votre nom', 'Izina ryawe') %>">
+        <input type="email" name="email" placeholder="<%= t('Your email', 'Votre email', 'Imeri yawe') %>" required>
+        <button type="submit" class="btn-newsletter">
+            <i class="fas fa-paper-plane"></i> 
+            <%= t('Subscribe', "S'abonner", 'Iyandikishe') %>
+        </button>
+    </form>
+    
+    <!-- Mobile Money Option -->
+    <div class="mobile-money-option">
+        <p><%= t('Or subscribe via Mobile Money', 'Ou abonnez-vous via Mobile Money', 'Cyangwa iyandikishe ukoresheje Mobile Money') %></p>
+        <div class="mobile-money-buttons">
+            <button class="mtn-btn">
+                <i class="fas fa-mobile-alt"></i> MTN
+            </button>
+            <button class="airtel-btn">
+                <i class="fas fa-mobile-alt"></i> Airtel
+            </button>
+        </div>
+    </div>
+    
+    <p class="privacy-note">
+        <i class="fas fa-lock"></i> 
+        <%= t('We respect your privacy. Unsubscribe anytime.', 'Nous respectons votre vie privée. Désabonnez-vous à tout moment.', 'Twubaha ibanga ryawe. Ushobora guhagarika icyarimwe.') %>
+    </p>
+</div>
+
+<style>
+.newsletter-signup {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.newsletter-icon {
+    font-size: 3rem;
+    color: #e74c3c;
+    margin-bottom: 20px;
+}
+
+.newsletter-signup h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.newsletter-signup p {
+    color: #bdc3c7;
+    margin-bottom: 25px;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.newsletter-form input {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.newsletter-form input:focus {
+    outline: 2px solid #e74c3c;
+}
+
+.btn-newsletter {
+    background: #e74c3c;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-newsletter:hover {
+    background: #c0392b;
+}
+
+.mobile-money-option {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-money-option p {
+    color: #ecf0f1;
+    margin-bottom: 15px;
+}
+
+.mobile-money-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.mtn-btn, .airtel-btn {
+    background: #f1c40f;
+    color: #2c3e50;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mtn-btn:hover, .airtel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.mtn-btn { background: #ffcc00; }
+.airtel-btn { background: #ed1c24; color: white; }
+
+.privacy-note {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: #95a5a6;
+}
+
+@media (max-width: 768px) {
+    .newsletter-form {
+        flex-direction: column;
+    }
+    
+    .mobile-money-buttons {
+        flex-direction: column;
+    }
+}
+</style>

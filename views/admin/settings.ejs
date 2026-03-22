@@ -1,0 +1,89 @@
+<%- layout('admin/layout', { 
+    pageTitle: 'Settings', 
+    currentPage: 'settings',
+    user: user 
+}) %>
+
+<div class="content-card">
+    <div class="card-header">
+        <h2><i class="fas fa-cog"></i> Site Settings</h2>
+    </div>
+    
+    <form onsubmit="saveSettings(event)">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Site Name</label>
+                <input type="text" id="site_name" class="form-control" value="<%= settings.site_name || 'ONNIEONE NEWS' %>">
+            </div>
+            <div class="form-group">
+                <label>Site Tagline</label>
+                <input type="text" id="site_tagline" class="form-control" value="<%= settings.site_tagline || 'Rwanda\'s Premier News Platform' %>">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Contact Email</label>
+                <input type="email" id="contact_email" class="form-control" value="<%= settings.contact_email || 'info@onieone.com' %>">
+            </div>
+            <div class="form-group">
+                <label>Items Per Page</label>
+                <input type="number" id="items_per_page" class="form-control" value="<%= settings.items_per_page || 10 %>">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Facebook URL</label>
+            <input type="url" id="facebook_url" class="form-control" value="<%= settings.facebook_url || '' %>">
+        </div>
+        
+        <div class="form-group">
+            <label>Twitter URL</label>
+            <input type="url" id="twitter_url" class="form-control" value="<%= settings.twitter_url || '' %>">
+        </div>
+        
+        <div class="form-group">
+            <label>Instagram URL</label>
+            <input type="url" id="instagram_url" class="form-control" value="<%= settings.instagram_url || '' %>">
+        </div>
+        
+        <div class="form-group">
+            <label>YouTube URL</label>
+            <input type="url" id="youtube_url" class="form-control" value="<%= settings.youtube_url || '' %>">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+    </form>
+</div>
+
+<script>
+function saveSettings(event) {
+    event.preventDefault();
+    
+    const settings = {
+        site_name: document.getElementById('site_name').value,
+        site_tagline: document.getElementById('site_tagline').value,
+        contact_email: document.getElementById('contact_email').value,
+        items_per_page: document.getElementById('items_per_page').value,
+        facebook_url: document.getElementById('facebook_url').value,
+        twitter_url: document.getElementById('twitter_url').value,
+        instagram_url: document.getElementById('instagram_url').value,
+        youtube_url: document.getElementById('youtube_url').value
+    };
+    
+    fetch('/admin/settings/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'CSRF-Token': '<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>' },
+        body: JSON.stringify(settings)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert('Settings saved successfully!');
+        } else {
+            alert('Error saving settings');
+        }
+    });
+}
+</script>

@@ -1,0 +1,47 @@
+<!-- Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-XXXXXXXXX-X');
+
+// Track dark social sharing
+document.querySelectorAll('.share-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const platform = btn.dataset.platform;
+        const url = btn.href;
+        const title = document.title;
+        
+        gtag('event', 'share', {
+            'event_category': 'engagement',
+            'event_label': platform,
+            'value': url
+        });
+        
+        // Track WhatsApp shares specifically
+        if (platform === 'whatsapp') {
+            gtag('event', 'whatsapp_share', {
+                'event_category': 'dark_social',
+                'event_label': title
+            });
+        }
+    });
+});
+
+// Track reading depth
+let maxScroll = 0;
+window.addEventListener('scroll', () => {
+    const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100;
+    if (scrollPercent > maxScroll) {
+        maxScroll = scrollPercent;
+        if (maxScroll > 25 && maxScroll < 75) {
+            gtag('event', 'scroll_depth', {
+                'event_category': 'engagement',
+                'event_label': '25-75%',
+                'value': Math.round(maxScroll)
+            });
+        }
+    }
+}, { passive: true });
+</script>

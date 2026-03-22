@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= category.name_en %> - ONNIEONE NEWS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: Arial; margin: 0; padding: 20px; }
+        .header { background: #dc2626; color: white; padding: 20px; text-align: center; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .article { background: white; padding: 20px; margin: 20px 0; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        a { color: #000; text-decoration: none; }
+        a:hover { color: #dc2626; }
+        .back { display: inline-block; margin: 20px 0; color: #dc2626; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1><i class="<%= category.icon %>"></i> <%= category.name_en %></h1>
+        </div>
+    </div>
+    
+    <div class="container">
+        <a href="/" class="back"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        
+        <% if (articles && articles.length > 0) { %>
+            <% articles.forEach(article => { %>
+                <div class="article">
+                    <h2><a href="/article/<%= article.id %>"><%= article.title_en %></a></h2>
+                    <p><%= article.summary_en || article.content_en.substring(0, 200) + '...' %></p>
+                    <small><i class="far fa-clock"></i> <%= new Date(article.published_at).toLocaleDateString() %></small>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No articles in this category yet.</p>
+        <% } %>
+    </div>
+</body>
+</html>

@@ -1,0 +1,655 @@
+<% const title=locals.pageTitle || 'ONNIEONE NEWS Admin' ; const currentUser=locals.user || { full_name: 'Admin' ,
+    username: 'admin' }; const currentPage=locals.currentPage || '' ; %>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            <%= title %>
+        </title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                background: #f5f5f5;
+                display: flex;
+            }
+
+            /* Sidebar - Black Theme */
+            .sidebar {
+                width: 300px;
+                background: #000;
+                color: white;
+                height: 100vh;
+                position: fixed;
+                overflow-y: auto;
+                z-index: 50;
+            }
+
+            .sidebar-header {
+                padding: 30px 25px;
+                border-bottom: 1px solid #333;
+                text-align: center;
+            }
+
+            .sidebar-header h2 {
+                font-size: 1.8rem;
+                font-weight: 800;
+                color: white;
+            }
+
+            .sidebar-header h2 span {
+                color: #dc2626;
+            }
+
+            .sidebar-header p {
+                color: #999;
+                font-size: 0.9rem;
+                margin-top: 5px;
+            }
+
+            .sidebar-menu {
+                padding: 20px 0;
+            }
+
+            .menu-category {
+                padding: 20px 25px 8px;
+                color: #666;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                font-weight: 600;
+            }
+
+            .menu-item {
+                padding: 12px 25px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                color: #ccc;
+                text-decoration: none;
+                transition: all 0.3s;
+                border-left: 3px solid transparent;
+            }
+
+            .menu-item i {
+                width: 20px;
+                color: #999;
+            }
+
+            .menu-item:hover,
+            .menu-item.active {
+                background: #1a1a1a;
+                color: #dc2626;
+                border-left-color: #dc2626;
+            }
+
+            .menu-item:hover i,
+            .menu-item.active i {
+                color: #dc2626;
+            }
+
+            /* Main Content */
+            .main-content {
+                flex: 1;
+                margin-left: 300px;
+                padding: 30px;
+            }
+
+            /* Top Bar */
+            .top-bar {
+                background: white;
+                padding: 20px 30px;
+                border-radius: 12px;
+                box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: 1px solid #e5e7eb;
+            }
+
+            .page-title h1 {
+                color: #1f2937;
+                font-size: 1.8rem;
+                font-weight: 700;
+            }
+
+            .page-title p {
+                color: #6b7280;
+                margin-top: 5px;
+                font-size: 0.95rem;
+            }
+
+            .user-info {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .user-avatar {
+                width: 45px;
+                height: 45px;
+                background: #dc2626;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-weight: bold;
+                font-size: 1.2rem;
+                border: 2px solid white;
+                box-shadow: 0 2px 10px rgba(220, 38, 38, 0.2);
+            }
+
+            .btn-logout {
+                background: #f3f4f6;
+                color: #4b5563;
+                padding: 8px 20px;
+                border-radius: 30px;
+                text-decoration: none;
+                font-size: 0.9rem;
+                font-weight: 600;
+                transition: all 0.3s;
+                border: 1px solid #e5e7eb;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .btn-logout:hover {
+                background: #dc2626;
+                color: white;
+                border-color: #dc2626;
+            }
+
+            .btn-view-site {
+                background: #000;
+                color: white;
+                padding: 8px 20px;
+                border-radius: 30px;
+                text-decoration: none;
+                font-size: 0.9rem;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.3s;
+            }
+
+            .btn-view-site:hover {
+                background: #dc2626;
+            }
+
+            /* Content Cards */
+            .content-card {
+                background: white;
+                padding: 25px;
+                border-radius: 12px;
+                box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+                margin-bottom: 30px;
+                border: 1px solid #e5e7eb;
+            }
+
+            .card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                border-bottom: 2px solid #f3f4f6;
+            }
+
+            .card-header h2 {
+                color: #1f2937;
+                font-size: 1.3rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .card-header h2 i {
+                color: #dc2626;
+            }
+
+            /* Buttons */
+            .btn {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 0.95rem;
+                font-weight: 600;
+                transition: all 0.3s;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .btn-primary {
+                background: #000;
+                color: white;
+            }
+
+            .btn-primary:hover {
+                background: #dc2626;
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
+            }
+
+            .btn-success {
+                background: #10b981;
+                color: white;
+            }
+
+            .btn-danger {
+                background: #ef4444;
+                color: white;
+            }
+
+            .btn-warning {
+                background: #f59e0b;
+                color: white;
+            }
+
+            .btn-sm {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+
+            /* Tables */
+            .table-responsive {
+                overflow-x: auto;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            th {
+                background: #f9fafb;
+                padding: 15px 12px;
+                text-align: left;
+                font-weight: 600;
+                color: #4b5563;
+                border-bottom: 2px solid #e5e7eb;
+                font-size: 0.9rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            td {
+                padding: 15px 12px;
+                border-bottom: 1px solid #e5e7eb;
+                color: #4b5563;
+            }
+
+            tr:hover {
+                background: #f9fafb;
+            }
+
+            /* Status Badges */
+            .status-badge {
+                padding: 4px 12px;
+                border-radius: 30px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                display: inline-block;
+            }
+
+            .status-published {
+                background: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+
+            .status-draft {
+                background: #fff3cd;
+                color: #856404;
+                border: 1px solid #ffeeba;
+            }
+
+            .status-pending {
+                background: #cce5ff;
+                color: #004085;
+                border: 1px solid #b8daff;
+            }
+
+            .status-active {
+                background: #d4edda;
+                color: #155724;
+            }
+
+            .status-inactive {
+                background: #f8d7da;
+                color: #721c24;
+            }
+
+            /* Action Buttons */
+            .action-buttons {
+                display: flex;
+                gap: 5px;
+            }
+
+            .btn-edit {
+                background: #10b981;
+                color: white;
+                padding: 5px 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 0.8rem;
+            }
+
+            .btn-delete {
+                background: #ef4444;
+                color: white;
+                padding: 5px 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 0.8rem;
+            }
+
+            .btn-view {
+                background: #3b82f6;
+                color: white;
+                padding: 5px 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 0.8rem;
+            }
+
+            /* Forms */
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 600;
+                color: #374151;
+            }
+
+            .form-control {
+                width: 100%;
+                padding: 12px 15px;
+                border: 2px solid #e5e7eb;
+                border-radius: 8px;
+                font-size: 1rem;
+                transition: all 0.3s;
+            }
+
+            .form-control:focus {
+                outline: none;
+                border-color: #dc2626;
+            }
+
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            /* Stats Cards */
+            .stats-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 25px;
+                margin-bottom: 30px;
+            }
+
+            .stat-card {
+                background: white;
+                padding: 25px;
+                border-radius: 12px;
+                box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                transition: all 0.3s;
+                border: 1px solid #e5e7eb;
+            }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 30px rgba(220, 38, 38, 0.1);
+            }
+
+            .stat-info h3 {
+                color: #6b7280;
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+
+            .stat-info .number {
+                color: #1f2937;
+                font-size: 2rem;
+                font-weight: 700;
+            }
+
+            .stat-icon {
+                width: 60px;
+                height: 60px;
+                background: #f3f4f6;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #dc2626;
+                font-size: 1.8rem;
+            }
+
+            /* Modal */
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+            }
+
+            .modal-content {
+                background: white;
+                width: 500px;
+                margin: 100px auto;
+                padding: 30px;
+                border-radius: 12px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                border-bottom: 2px solid #f0f0f0;
+            }
+
+            .close {
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: #999;
+            }
+
+            .close:hover {
+                color: #dc2626;
+            }
+
+            /* Alerts */
+            .alert {
+                padding: 15px 20px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+            }
+
+            .alert-success {
+                background: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+
+            .alert-error {
+                background: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+
+            @media (max-width: 768px) {
+                .sidebar {
+                    display: none;
+                }
+
+                .main-content {
+                    margin-left: 0;
+                }
+
+                .stats-grid,
+                .form-row {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2><span>ONNIEONE</span> NEWS</h2>
+                <p>Admin Panel</p>
+            </div>
+
+            <div class="sidebar-menu">
+                <!-- MAIN -->
+                <div class="menu-category">MAIN</div>
+                <a href="/admin/dashboard" class="menu-item <%= currentPage === 'dashboard' ? 'active' : '' %>">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="/admin/news" class="menu-item <%= currentPage === 'news' ? 'active' : '' %>">
+                    <i class="fas fa-newspaper"></i> All News
+                </a>
+                <a href="/admin/news/add" class="menu-item <%= currentPage === 'add-news' ? 'active' : '' %>">
+                    <i class="fas fa-plus-circle"></i> Add News
+                </a>
+                <a href="/admin/live-editor" class="menu-item <%= currentPage === 'live-editor' ? 'active' : '' %>">
+                    <i class="fas fa-edit"></i> Live Editor
+                </a>
+
+                <!-- CONTENT -->
+                <div class="menu-category">CONTENT</div>
+                <a href="/admin/categories" class="menu-item <%= currentPage === 'categories' ? 'active' : '' %>">
+                    <i class="fas fa-list"></i> Categories
+                </a>
+                <a href="/admin/featured" class="menu-item <%= currentPage === 'featured' ? 'active' : '' %>">
+                    <i class="fas fa-star"></i> Featured Articles
+                </a>
+                <a href="/admin/breaking" class="menu-item <%= currentPage === 'breaking' ? 'active' : '' %>">
+                    <i class="fas fa-bolt"></i> Breaking News
+                </a>
+                <a href="/admin/popular" class="menu-item <%= currentPage === 'popular' ? 'active' : '' %>">
+                    <i class="fas fa-fire"></i> Popular News
+                </a>
+
+                <!-- MEDIA -->
+                <div class="menu-category">MEDIA</div>
+                <a href="/admin/media" class="menu-item <%= currentPage === 'media' ? 'active' : '' %>">
+                    <i class="fas fa-images"></i> Media Library
+                </a>
+                <a href="/admin/videos" class="menu-item <%= currentPage === 'videos' ? 'active' : '' %>">
+                    <i class="fas fa-video"></i> Videos
+                </a>
+                <a href="/admin/galleries" class="menu-item <%= currentPage === 'galleries' ? 'active' : '' %>">
+                    <i class="fas fa-photo-video"></i> Photo Galleries
+                </a>
+
+                <!-- SECTIONS -->
+                <div class="menu-category">SECTIONS</div>
+                <a href="/admin/auctions" class="menu-item <%= currentPage === 'auctions' ? 'active' : '' %>">
+                    <i class="fas fa-gavel"></i> Auctions
+                </a>
+                <a href="/admin/announcements" class="menu-item <%= currentPage === 'announcements' ? 'active' : '' %>">
+                    <i class="fas fa-bullhorn"></i> Announcements
+                </a>
+                <a href="/admin/history" class="menu-item <%= currentPage === 'history' ? 'active' : '' %>">
+                    <i class="fas fa-history"></i> Today in History
+                </a>
+
+                <!-- USERS -->
+                <div class="menu-category">USERS</div>
+                <a href="/admin/users" class="menu-item <%= currentPage === 'users' ? 'active' : '' %>">
+                    <i class="fas fa-users"></i> User Management
+                </a>
+                <a href="/admin/users/add" class="menu-item <%= currentPage === 'add-user' ? 'active' : '' %>">
+                    <i class="fas fa-user-plus"></i> Add New User
+                </a>
+                <a href="/admin/comments" class="menu-item <%= currentPage === 'comments' ? 'active' : '' %>">
+                    <i class="fas fa-comments"></i> Comments
+                </a>
+
+                <!-- SETTINGS -->
+                <div class="menu-category">SETTINGS</div>
+                <a href="/admin/settings" class="menu-item <%= currentPage === 'settings' ? 'active' : '' %>">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+                <a href="/admin/profile" class="menu-item <%= currentPage === 'profile' ? 'active' : '' %>">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+                <a href="/admin/logout" class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+                <a href="/" target="_blank" class="menu-item">
+                    <i class="fas fa-external-link-alt"></i> View Site
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>
+                        <%= title %>
+                    </h1>
+                    <p>Welcome back, <%= currentUser.full_name || currentUser.username %>
+                    </p>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <%= (currentUser.full_name || currentUser.username).charAt(0).toUpperCase() %>
+                    </div>
+                    <a href="/" target="_blank" class="btn-view-site">
+                        <i class="fas fa-external-link-alt"></i> View Site
+                    </a>
+                    <a href="/admin/logout" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <%- body %>
+        </div>
+    </body>
+
+    </html>

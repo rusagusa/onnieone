@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= author.full_name %> - ONNIEONE News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .profile-header {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            color: white;
+            padding: 60px 0;
+            border-bottom: 3px solid #dc2626;
+        }
+        
+        .profile-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .profile-avatar-large {
+            width: 200px;
+            height: 200px;
+            background: #dc2626;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            font-weight: bold;
+            color: white;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .profile-info h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .profile-role {
+            color: #9ca3af;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+        
+        .profile-bio {
+            color: #d1d5db;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            max-width: 600px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .profile-stat {
+            text-align: center;
+        }
+        
+        .profile-stat .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #dc2626;
+        }
+        
+        .profile-stat .label {
+            color: #9ca3af;
+            font-size: 0.95rem;
+        }
+        
+        .profile-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .profile-social a {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .profile-social a:hover {
+            background: #dc2626;
+            transform: translateY(-3px);
+        }
+        
+        .articles-section {
+            padding: 60px 0;
+            background: #f9fafb;
+        }
+        
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .article-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(220,38,38,0.15);
+        }
+        
+        .article-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .article-card:hover .article-image img {
+            transform: scale(1.1);
+        }
+        
+        .article-content {
+            padding: 20px;
+        }
+        
+        .article-category {
+            color: #dc2626;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .article-content h3 {
+            color: #1f2937;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .article-meta {
+            display: flex;
+            gap: 15px;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .article-meta i {
+            color: #dc2626;
+            margin-right: 5px;
+        }
+        
+        @media (max-width: 1024px) {
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-stats {
+                justify-content: center;
+            }
+            
+            .profile-social {
+                justify-content: center;
+            }
+            
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+    <div class="profile-header">
+        <div class="container">
+            <div class="profile-container">
+                <div class="profile-avatar-large">
+                    <%= author.full_name ? author.full_name.charAt(0).toUpperCase() : 'J' %>
+                </div>
+                <div class="profile-info">
+                    <h1><%= author.full_name %></h1>
+                    <div class="profile-role">
+                        <%= author.role ? author.role.replace('_', ' ').toUpperCase() : 'JOURNALIST' %>
+                    </div>
+                    <div class="profile-bio">
+                        <%= author.bio || t('Experienced journalist covering African news and global affairs.', 'Journaliste expérimenté couvrant l\'actualité africaine et internationale.', 'Umunyamakuru ufite ubunararibone utanga amakuru ya Afrika n\'isi yose.') %>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <div class="number"><%= articles.length %></div>
+                            <div class="label"><%= t('Articles', 'Articles', 'Ingingo') %></div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="number"><%= articles.reduce((sum, a) => sum + (a.views || 0), 0) %></div>
+                            <div class="label"><%= t('Views', 'Vues', 'Ababirebye') %></div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="number"><%= articles.filter(a => a.is_trending).length %></div>
+                            <div class="label"><%= t('Trending', 'Tendances', 'Bikunzwe') %></div>
+                        </div>
+                    </div>
+                    <div class="profile-social">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <section class="articles-section">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-pen-fancy"></i> <%= t('Articles by', 'Articles par', 'Ingingo za') %> <%= author.full_name %></h2>
+            </div>
+            
+            <div class="articles-grid">
+                <% if (articles && articles.length > 0) { %>
+                    <% articles.forEach(article => { %>
+                        <a href="/article/<%= article.id %>" class="article-card">
+                            <div class="article-image">
+                                <img src="<%= article.image_url || 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=400' %>" alt="<%= article.title %>">
+                            </div>
+                            <div class="article-content">
+                                <span class="article-category"><%= article.category_name || 'News' %></span>
+                                <h3><%= article.title %></h3>
+                                <div class="article-meta">
+                                    <span><i class="far fa-calendar"></i> <%= new Date(article.published_at).toLocaleDateString() %></span>
+                                    <span><i class="far fa-eye"></i> <%= article.views || 0 %></span>
+                                </div>
+                            </div>
+                        </a>
+                    <% }); %>
+                <% } else { %>
+                    <p style="text-align: center; color: #6b7280; grid-column: 1/-1;">
+                        <%= t('No articles found', 'Aucun article trouvé', 'Nta ngingo zabonetse') %>
+                    </p>
+                <% } %>
+            </div>
+        </div>
+    </section>
+    
+    <%- include('partials/footer') %>
+</body>
+</html>

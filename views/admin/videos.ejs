@@ -1,0 +1,77 @@
+<%- layout('admin/layout', { pageTitle: 'Video Management' , currentPage: 'videos' , user: user }) %>
+
+    <div class="content-card">
+        <div class="card-header">
+            <h2><i class="fas fa-video"></i> Manage Videos</h2>
+            <!-- Future Proofing Upload Button -->
+            <button class="btn btn-primary" onclick="alert('Video uploading coming soon!')">
+                <i class="fas fa-upload"></i> Upload Video
+            </button>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Preview</th>
+                        <th>Filename</th>
+                        <th>Size</th>
+                        <th>Uploader</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (media && media.length> 0) { %>
+                        <% media.forEach(m=> { %>
+                            <tr>
+                                <td>#<%= m.id %>
+                                </td>
+                                <td>
+                                    <video width="100" src="<%= m.path %>"></video>
+                                </td>
+                                <td>
+                                    <%= m.original_name %>
+                                </td>
+                                <td>
+                                    <%= (m.size / 1024 / 1024).toFixed(2) %> MB
+                                </td>
+                                <td>
+                                    <%= m.uploader_name || 'Admin' %>
+                                </td>
+                                <td>
+                                    <%= new Date(m.created_at).toLocaleDateString() %>
+                                </td>
+                                <td class="action-buttons">
+                                    <button onclick="deleteMedia(<%= m.id %>)" class="btn-delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <% }); %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="7" style="text-align: center; padding: 30px;">
+                                            No videos found.
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function deleteMedia(id) {
+            if (confirm('Are you sure you want to delete this video?')) {
+                fetch('/admin/media/delete/' + id, { method: 'POST', headers: { 'CSRF-Token': '<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>' } })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            location.reload();
+                        }
+                    });
+            }
+        }
+    </script>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= article.title_en %> - ONNIEONE NEWS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: Arial; margin: 0; padding: 20px; }
+        .header { background: #000; color: white; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .article-image { width: 100%; max-height: 400px; object-fit: cover; margin: 20px 0; }
+        .article-content { line-height: 1.8; }
+        .meta { color: #666; margin: 20px 0; }
+        .back { display: inline-block; margin: 20px 0; color: #dc2626; text-decoration: none; }
+        .related { margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <a href="/" style="color: white; text-decoration: none;">← Back to Home</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h1><%= article.title_en %></h1>
+        <div class="meta">
+            <span><i class="far fa-calendar"></i> <%= new Date(article.published_at).toLocaleDateString() %></span>
+            <span style="margin-left: 20px;"><i class="far fa-eye"></i> <%= article.views || 0 %> views</span>
+        </div>
+        
+        <% if (article.image_url) { %>
+            <img src="<%= article.image_url %>" alt="<%= article.title_en %>" class="article-image">
+        <% } %>
+        
+        <div class="article-content">
+            <p><%= article.content_en %></p>
+        </div>
+        
+        <% if (related && related.length > 0) { %>
+            <div class="related">
+                <h3>Related Articles</h3>
+                <ul>
+                    <% related.forEach(rel => { %>
+                        <li><a href="/article/<%= rel.id %>"><%= rel.title_en %></a></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>

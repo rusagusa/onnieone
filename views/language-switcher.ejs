@@ -1,0 +1,85 @@
+<div class="language-switcher">
+    <button class="lang-btn">
+        <i class="fas fa-globe"></i> 
+        <% if (lang === 'fr') { %>FR<% } else if (lang === 'rw') { %>RW<% } else { %>EN<% } %>
+        <i class="fas fa-chevron-down"></i>
+    </button>
+    <ul class="lang-dropdown">
+        <li><a href="?lang=en" class="<%= lang === 'en' ? 'active' : '' %>">English</a></li>
+        <li><a href="?lang=fr" class="<%= lang === 'fr' ? 'active' : '' %>">Français</a></li>
+        <li><a href="?lang=rw" class="<%= lang === 'rw' ? 'active' : '' %>">Kinyarwanda</a></li>
+    </ul>
+</div>
+
+<style>
+.language-switcher {
+    position: relative;
+    margin-left: 15px;
+}
+
+.lang-btn {
+    background: #f3f4f6;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #1f2937;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.lang-btn:hover {
+    background: #dc2626;
+    color: white;
+    border-color: #000;
+}
+
+.lang-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    min-width: 160px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    padding: 10px 0;
+    display: none;
+    z-index: 1000;
+    border-top: 3px solid #dc2626;
+    margin-top: 5px;
+}
+
+.language-switcher:hover .lang-dropdown {
+    display: block;
+}
+
+.lang-dropdown li {
+    list-style: none;
+}
+
+.lang-dropdown a {
+    display: block;
+    padding: 10px 20px;
+    color: #4b5563;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.lang-dropdown a:hover,
+.lang-dropdown a.active {
+    background: #f3f4f6;
+    color: #dc2626;
+    padding-left: 25px;
+}
+
+.lang-dropdown a.active {
+    font-weight: 600;
+    color: #dc2626;
+    background: #fee2e2;
+}
+</style>

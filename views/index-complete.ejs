@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= settings.site_name || 'ONNIEONE NEWS' %> - Rwanda's Premier News Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== HERO SECTION WITH BLACK BACKGROUND ===== */
+        .hero-section {
+            background: #000;
+            position: relative;
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 20px;
+            border-bottom: 4px solid #dc2626;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1547489950-1c5c8b2b5a6b?w=1400');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .hero-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content h1 span {
+            color: #dc2626;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #e5e7eb;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .hero-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .hero-image-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transition: all 0.5s ease;
+            border: 2px solid #dc2626;
+        }
+
+        .hero-image-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(220,38,38,0.3);
+        }
+
+        .hero-image-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .hero-image-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .hero-image-card .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .hero-image-card:hover .caption {
+            transform: translateY(0);
+        }
+
+        /* ===== REAL-TIME UPDATES BAR ===== */
+        .updates-bar {
+            background: #1a1a1a;
+            color: white;
+            padding: 15px 0;
+            margin-top: 30px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            border: 1px solid #333;
+        }
+
+        .updates-label {
+            background: #dc2626;
+            padding: 10px 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 50px;
+            margin-right: 20px;
+            white-space: nowrap;
+            animation: pulse 2s infinite;
+        }
+
+        .updates-ticker {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+            white-space: nowrap;
+        }
+
+        .ticker-item {
+            display: inline-block;
+            padding-right: 50px;
+            color: #ffd700;
+        }
+
+        .ticker-item i {
+            margin-right: 8px;
+            color: #dc2626;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .search-bar {
+            display: flex;
+            margin: 0 20px;
+            background: white;
+            border-radius: 50px;
+            overflow: hidden;
+            min-width: 300px;
+            border: 2px solid #dc2626;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            background: #dc2626;
+            border: none;
+            padding: 12px 25px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: #b91c1c;
+        }
+
+        /* Rest of your existing CSS remains the same */
+        .logo-section {
+            background: white;
+            padding: 30px 0;
+            border-bottom: 3px solid #dc2626;
+        }
+        /* ... (keep all your existing CSS from before) ... */
+    </style>
+</head>
+<body>
+    <!-- HERO SECTION WITH BLACK BACKGROUND -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1>Welcome to <span>Rwanda</span><br>The Land of a Thousand Hills</h1>
+                    <p>Discover the beauty of Rwanda through our eyes. From majestic gorillas to vibrant culture, we bring you the stories that matter.</p>
+                </div>
+                <div class="hero-images">
+                    <!-- Right side: Mountain Gorillas -->
+                    <div class="hero-image-card">
+                        <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600" alt="Mountain Gorillas">
+                        <div class="caption">Mountain Gorillas - Volcanoes National Park</div>
+                    </div>
+                    <!-- Left side: Kigali Convention Centre -->
+                    <div class="hero-image-card">
+                        <img src="https://images.unsplash.com/photo-1559598467-f8b76c8155d0?w=600" alt="Kigali Convention Centre">
+                        <div class="caption">Kigali Convention Centre - Symbol of Modern Rwanda</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Updates & Search -->
+            <div class="updates-bar">
+                <span class="updates-label"><i class="fas fa-bolt"></i> LIVE</span>
+                <div class="updates-ticker">
+                    <div class="ticker-content">
+                        <% if (updates && updates.length > 0) { 
+                            updates.forEach(update => { %>
+                                <span class="ticker-item"><i class="fas fa-circle"></i> <%= update.content_en %></span>
+                        <% }); } else { %>
+                            <span class="ticker-item"><i class="fas fa-circle"></i> Breaking: Rwanda launches new tourism initiative</span>
+                            <span class="ticker-item"><i class="fas fa-circle"></i> Kigali hosts African tech summit</span>
+                            <span class="ticker-item"><i class="fas fa-circle"></i> Gorilla population reaches 1000</span>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="search-bar">
+                    <form action="/search" method="GET" style="display: flex; width: 100%;">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                        <input type="text" name="q" placeholder="Search news...">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REST OF YOUR HOMEPAGE (keep all your existing sections) -->
+    <!-- Logo & Sponsor Section -->
+    <section class="logo-section">
+        <div class="container">
+            <div class="logo-grid">
+                <div class="logo-box">
+                    <img src="/images/onieone-logo.png" alt="ONNIEONE NEWS" onerror="this.style.display='none'">
+                </div>
+                <div class="logo-box">
+                    <a href="/" class="main-logo">ONNIEONE <span>NEWS</span></a>
+                </div>
+                <div class="logo-box">
+                    <div class="sponsor-banner">
+                        <% if (ads && ads.find(a => a.location === 'header')) { %>
+                            <img src="<%= ads.find(a => a.location === 'header').image_url %>" alt="Sponsor">
+                        <% } else { %>
+                            <i class="fas fa-ad" style="font-size: 2rem; color: #dc2626;"></i>
+                            <p style="margin-top: 10px;">Sponsor Banner</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Keep all your other sections exactly as they were -->
+    <!-- Navigation, Breaking News, Main Content, Footer, etc. -->
+</body>
+</html>

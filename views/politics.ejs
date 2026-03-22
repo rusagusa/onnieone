@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politics News - ONNIEONE News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/category.css">
+</head>
+<body>
+    <!-- Professional Header - Black Background -->
+<header style="background: #000000; border-bottom: 3px solid #dc2626; position: sticky; top: 0; z-index: 1000;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+        <a href="/" style="font-size: 24px; font-weight: bold; color: #ffffff; text-decoration: none;">
+            <span style="color: #dc2626;">ONNIEONE</span> NEWS
+        </a>
+        <nav style="display: flex; gap: 30px; align-items: center;">
+            <a href="/" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-home" style="color: #dc2626;"></i> Home
+            </a>
+            <a href="/categories" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-list" style="color: #dc2626;"></i> Categories
+            </a>
+            <a href="/regions" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-globe" style="color: #dc2626;"></i> Regions
+            </a>
+            <a href="/trending" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-fire" style="color: #dc2626;"></i> Trending
+            </a>
+            <a href="/region/rwanda" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-map-marker-alt" style="color: #dc2626;"></i> Rwanda
+            </a>
+            <form action="/search" method="GET" style="display: flex; align-items: center; background: #1a1a1a; border-radius: 30px; padding: 8px 15px; border: 1px solid #333;">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                <input type="text" name="q" placeholder="Search news..." style="background: transparent; border: none; color: #ffffff; padding: 5px; outline: none; width: 200px; font-size: 14px;">
+                <button type="submit" style="background: transparent; border: none; color: #dc2626; cursor: pointer;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </nav>
+    </div>
+</header>
+
+<style>
+    nav a:hover {
+        color: #dc2626 !important;
+    }
+    nav a:hover i {
+        transform: scale(1.1);
+        transition: none;
+    }
+    @media (max-width: 768px) {
+        header > div {
+            flex-direction: column;
+            gap: 15px;
+        }
+        nav {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+</style>
+
+        <div class="category-header" style="background: #000000 !important; border-bottom: 4px solid #dc2626; padding: 80px 0; text-align: center; position: relative;">
+        <div class="container">
+            <div class="category-icon" style="font-size: 80px; margin-bottom: 25px; color: #dc2626;">
+                <i class="fas fa-landmark"></i>
+            </div>
+            <h1 style="font-size: 48px; font-weight: 800; margin-bottom: 20px; color: #ffffff; text-shadow: 2px 2px 0 #dc2626;">🏛️ POLITICS TODAY 🏛️</h1>
+            <p style="font-size: 18px; max-width: 700px; margin: 0 auto; background: rgba(255,255,255,0.1); padding: 15px 35px; border-radius: 50px; color: #ffffff; border: 1px solid #dc2626; display: inline-block;">Latest political news, analysis, and updates</p>
+        </div>
+    </div>
+            <h1>🏛️ POLITICS TODAY 🏛️</h1>
+            <p>Latest political news, analysis, and updates</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-section" style="background: #ffffff;">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">45</div>
+                    <div class="stat-label">Parliament Seats</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Ministries</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">New Bills</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">89%</div>
+                    <div class="stat-label">Voter Turnout</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ticker" style="background: #000000;">
+        <div class="container">
+            <div class="ticker-wrap">
+                <div class="ticker-move">
+                    <span class="ticker-item"><i class="fas fa-exclamation-circle"></i> Parliament passes new investment bill</span>
+                    <span class="ticker-item"><i class="fas fa-exclamation-circle"></i> President addresses nation tonight</span>
+                    <span class="ticker-item"><i class="fas fa-exclamation-circle"></i> Cabinet reshuffle expected</span>
+                    <span class="ticker-item"><i class="fas fa-exclamation-circle"></i> Election commission announces dates</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="main-content">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-newspaper"></i> Latest Political News</h2>
+                    <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="news-grid">
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Parliament</span>
+                            <h3 class="news-title"><a href="#">Parliament Passes New Investment Bill to Boost Economy</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2 hours ago</span>
+                                <span><i class="far fa-eye"></i> 3.2k views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Diplomacy</span>
+                            <h3 class="news-title"><a href="#">President Meets with East African Leaders for Regional Summit</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 5 hours ago</span>
+                                <span><i class="far fa-eye"></i> 2.1k views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1523995462485-3d171b5c8fa9?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Government</span>
+                            <h3 class="news-title"><a href="#">New Cabinet Ministers Sworn In at Presidential Palace</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 1 day ago</span>
+                                <span><i class="far fa-eye"></i> 4.5k views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Elections</span>
+                            <h3 class="news-title"><a href="#">Election Commission Announces 2026 Polling Dates</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2 days ago</span>
+                                <span><i class="far fa-eye"></i> 5.8k views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>Latest Polls</h3>
+                    </div>
+                    
+                    <div class="poll-item">
+                        <div class="poll-header">
+                            <span>Presidential Approval</span>
+                            <span>78%</span>
+                        </div>
+                        <div class="poll-bar-container">
+                            <div class="poll-bar-fill" style="width: 78%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="poll-item">
+                        <div class="poll-header">
+                            <span>Economy Direction</span>
+                            <span>65%</span>
+                        </div>
+                        <div class="poll-bar-container">
+                            <div class="poll-bar-fill" style="width: 65%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="poll-item">
+                        <div class="poll-header">
+                            <span>Next Election</span>
+                            <span>82%</span>
+                        </div>
+                        <div class="poll-bar-container">
+                            <div class="poll-bar-fill" style="width: 82%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-users"></i>
+                        <h3>Cabinet Members</h3>
+                    </div>
+                    
+                    <div class="minister-item">
+                        <div class="minister-avatar">JP</div>
+                        <div>
+                            <div class="item-title">Jean Pierre</div>
+                            <div class="item-subtitle">Prime Minister</div>
+                        </div>
+                    </div>
+                    
+                    <div class="minister-item">
+                        <div class="minister-avatar">MC</div>
+                        <div>
+                            <div class="item-title">Marie Claire</div>
+                            <div class="item-subtitle">Foreign Affairs</div>
+                        </div>
+                    </div>
+                    
+                    <div class="minister-item">
+                        <div class="minister-avatar">PD</div>
+                        <div>
+                            <div class="item-title">Paul Dushime</div>
+                            <div class="item-subtitle">Minister of Finance</div>
+                        </div>
+                    </div>
+                    
+                    <div class="minister-item">
+                        <div class="minister-avatar">JM</div>
+                        <div>
+                            <div class="item-title">Jean Marie</div>
+                            <div class="item-subtitle">Minister of Defense</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Footer - Black, White, Red, Gray -->
+<footer style="background: #000000; color: #ffffff; padding: 60px 0 30px; margin-top: 60px; border-top: 4px solid #dc2626;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        <!-- Footer Grid -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 40px;">
+            <!-- About Column -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-landmark"></i> Politics
+                </h3>
+                <p style="color: #9ca3af; line-height: 1.8; margin-bottom: 20px;">Your trusted source for political news, analysis, and updates from Rwanda and around the world.</p>
+                <div style="display: flex; gap: 15px;">
+                    <a href="#" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: all 0.3s;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: all 0.3s;">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: all 0.3s;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@onnieoneEntertainment" target="_blank" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: all 0.3s;">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-link"></i> Quick Links
+                </h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 12px;"><a href="/trending" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-fire" style="color: #dc2626; font-size: 12px;"></i> Trending Now</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/categories" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-list" style="color: #dc2626; font-size: 12px;"></i> All Categories</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/regions" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-globe" style="color: #dc2626; font-size: 12px;"></i> Regions</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/about" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-info-circle" style="color: #dc2626; font-size: 12px;"></i> About Us</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/contact" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-envelope" style="color: #dc2626; font-size: 12px;"></i> Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Categories -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-tags"></i> Categories
+                </h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 12px;"><a href="/category/politics" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-landmark" style="color: #dc2626; font-size: 12px;"></i> Politics</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/category/sports" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-futbol" style="color: #dc2626; font-size: 12px;"></i> Sports</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/category/business" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-chart-line" style="color: #dc2626; font-size: 12px;"></i> Business</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/category/entertainment" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-film" style="color: #dc2626; font-size: 12px;"></i> Entertainment</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/category/comedy" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-laugh" style="color: #dc2626; font-size: 12px;"></i> Comedy</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-envelope"></i> Newsletter
+                </h3>
+                <p style="color: #9ca3af; margin-bottom: 15px;">Subscribe to get political updates</p>
+                <form style="display: flex; background: #1a1a1a; border-radius: 30px; padding: 5px; border: 1px solid #333;">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                    <input type="email" placeholder="Your email" style="flex: 1; background: transparent; border: none; padding: 12px 15px; color: #ffffff; outline: none;">
+                    <button type="submit" style="background: #dc2626; color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: background 0.3s;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div style="text-align: center; padding-top: 30px; border-top: 1px solid #333;">
+            <p style="color: #9ca3af; font-size: 14px;">
+                &copy; 2026 <span style="color: #dc2626;">ONNIEONE NEWS</span>. All rights reserved. | 
+                <a href="/privacy" style="color: #9ca3af; text-decoration: none; transition: color 0.3s;">Privacy</a> | 
+                <a href="/terms" style="color: #9ca3af; text-decoration: none; transition: color 0.3s;">Terms</a> | 
+                <a href="/advertise" style="color: #9ca3af; text-decoration: none; transition: color 0.3s;">Advertise</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer a:hover {
+        color: #dc2626 !important;
+    }
+    footer .social-links a:hover {
+        background: #dc2626 !important;
+        color: white !important;
+        transform: translateY(-3px);
+    }
+    @media (max-width: 768px) {
+        footer > div > div:first-child {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+    }
+    @media (max-width: 480px) {
+        footer > div > div:first-child {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+</body>
+</html>

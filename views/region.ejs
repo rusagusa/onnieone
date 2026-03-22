@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= region.name %> News - ONNIEONE News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Additional inline styles for region page */
+        .region-header {
+            background: linear-gradient(135deg, #000000 0%, #dc2626 70%, #ffffff 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .region-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255,255,255,0.05) 0px,
+                rgba(255,255,255,0.05) 20px,
+                rgba(220,38,38,0.05) 20px,
+                rgba(220,38,38,0.05) 40px,
+                rgba(0,0,0,0.05) 40px,
+                rgba(0,0,0,0.05) 60px
+            );
+            animation: moveBackground 20s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(360deg) scale(1.5); }
+        }
+
+        .region-header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .region-flag-large {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: floatFlag 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(220,38,38,0.5));
+        }
+
+        @keyframes floatFlag {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .region-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #ffffff 0%, #dc2626 50%, #000000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .region-header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Quick Stats Bar */
+        .quick-stats {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-bottom: 3px solid #dc2626;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border-radius: 30px;
+            border-left: 4px solid #dc2626;
+        }
+
+        .stat-badge i {
+            color: #dc2626;
+            font-size: 1.2rem;
+        }
+
+        .stat-badge span {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .stat-badge .badge-number {
+            color: #dc2626;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: #1a1a1a;
+            padding: 15px 0;
+            position: sticky;
+            top: 70px;
+            z-index: 99;
+        }
+
+        .filter-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: #2d2d2d;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #dc2626;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn i {
+            font-size: 0.9rem;
+        }
+
+        .sort-select {
+            padding: 8px 20px;
+            background: white;
+            border: 2px solid #dc2626;
+            border-radius: 30px;
+            color: #1a1a1a;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .sort-select:focus {
+            border-color: #000000;
+        }
+
+        /* Main Content Layout */
+        .region-content {
+            padding: 40px 0;
+            background: #f5f5f5;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* Featured Article */
+        .featured-article {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 4px solid #dc2626;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-bottom: 3px solid #dc2626;
+        }
+
+        .featured-content {
+            padding: 30px;
+        }
+
+        .article-badges {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.breaking {
+            background: #dc2626;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .badge.trending {
+            background: #000000;
+            color: white;
+        }
+
+        .badge.featured {
+            background: #ffffff;
+            color: #1a1a1a;
+            border: 2px solid #dc2626;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .featured-category {
+            color: #dc2626;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .featured-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+
+        .featured-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .featured-title a:hover {
+            color: #dc2626;
+        }
+
+        .featured-meta {
+            display: flex;
+            gap: 20px;
+            color: #6c757d;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .featured-meta i {
+            color: #dc2626;
+            margin-right: 5px;
+        }
+
+        .featured-summary {
+            color: #495057;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 25px;
+            background: #dc2626;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .read-more-btn:hover {
+            background: #000000;
+            gap: 15px;
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            border-bottom-color: #dc2626;
+        }
+
+        .news-card-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .news-card-content {
+            padding: 15px;
+        }
+
+        .news-card-title {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+            line-height: 1.4;
+        }
+
+        .news-card-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .news-card-title a:hover {
+            color: #dc2626;
+        }
+
+        .news-card-meta {
+            display: flex;
+            gap: 10px;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+
+        .news-card-meta i {
+            color: #dc2626;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .sidebar-widget {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid #dc2626;
+        }
+
+        .widget-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .widget-title i {
+            color: #dc2626;
+        }
+
+        .widget-title span {
+            background: #dc2626;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        /* Trending List */
+        .trending-list {
+            list-style: none;
+        }
+
+        .trending-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+        }
+
+        .trending-number {
+            width: 30px;
+            height: 30px;
+            background: #f8f9fa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #dc2626;
+            border: 2px solid #dc2626;
+        }
+
+        .trending-content {
+            flex: 1;
+        }
+
+        .trending-title {
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+
+        .trending-title a {
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .trending-title a:hover {
+            color: #dc2626;
+        }
+
+        .trending-meta {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        .trending-meta i {
+            color: #dc2626;
+            margin-right: 3px;
+        }
+
+        /* Category Cloud */
+        .category-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .category-tag {
+            padding: 8px 15px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .category-tag:hover {
+            background: #dc2626;
+            color: white;
+            transform: translateY(-2px);
+            border-color: #000000;
+        }
+
+        .category-tag i {
+            margin-right: 5px;
+        }
+
+        /* Region Info Cards */
+        .region-info-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-bottom: 3px solid #dc2626;
+        }
+
+        .info-card i {
+            font-size: 2.5rem;
+            color: #dc2626;
+            margin-bottom: 15px;
+        }
+
+        .info-card h3 {
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Newsletter */
+        .newsletter-box {
+            background: linear-gradient(135deg, #000000, #1a1a1a);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .newsletter-box h3 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .newsletter-box p {
+            color: #e5e5e5;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            padding: 12px 25px;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            background: #b91c1c;
+        }
+
+        /* Load More Button */
+        .load-more-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .load-more-btn {
+            padding: 12px 40px;
+            background: transparent;
+            border: 2px solid #dc2626;
+            color: #1a1a1a;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .load-more-btn:hover {
+            background: #dc2626;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .region-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .featured-image {
+                height: 250px;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .region-info-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .filter-wrapper {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <!-- Region Header with Black, Red, White -->
+    <div class="region-header">
+        <div class="container">
+            <div class="region-header-content">
+                <div class="region-flag-large"><%= region.flag || '🇷🇼' %></div>
+                <h1><%= region.name %></h1>
+                <p>Your trusted source for news and updates from <%= region.name %></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats Bar -->
+    <div class="quick-stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-badge">
+                    <i class="fas fa-newspaper"></i>
+                    <span><span class="badge-number"><%= news ? news.length : 0 %></span> Articles</span>
+                </div>
+                <div class="stat-badge">
+                    <i class="fas fa-fire"></i>
+                    <span><span class="badge-number">
+                        <% 
+                            let trendingCount = 0;
+                            if (news) {
+                                news.forEach(item => { if(item.is_trending) trendingCount++; });
+                            }
+                        %>
+                        <%= trendingCount %>
+                    </span> Trending</span>
+                </div>
+                <div class="stat-badge">
+                    <i class="fas fa-eye"></i>
+                    <span><span class="badge-number">
+                        <% 
+                            let totalViews = 0;
+                            if (news) {
+                                news.forEach(item => { totalViews += item.views || 0; });
+                            }
+                        %>
+                        <%= totalViews %>
+                    </span> Views</span>
+                </div>
+                <div class="stat-badge">
+                    <i class="fas fa-clock"></i>
+                    <span>Updated Daily</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <div class="container">
+            <div class="filter-wrapper">
+                <div class="filter-tabs">
+                    <button class="filter-btn active" onclick="filterNews('all')">
+                        <i class="fas fa-newspaper"></i> All News
+                    </button>
+                    <button class="filter-btn" onclick="filterNews('trending')">
+                        <i class="fas fa-fire"></i> Trending
+                    </button>
+                    <button class="filter-btn" onclick="filterNews('breaking')">
+                        <i class="fas fa-exclamation-circle"></i> Breaking
+                    </button>
+                    <button class="filter-btn" onclick="filterNews('featured')">
+                        <i class="fas fa-star"></i> Featured
+                    </button>
+                </div>
+                <select class="sort-select" onchange="sortNews(this.value)">
+                    <option value="newest">📅 Newest First</option>
+                    <option value="oldest">📅 Oldest First</option>
+                    <option value="most-viewed">👁️ Most Viewed</option>
+                    <option value="most-liked">❤️ Most Liked</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="region-content">
+        <div class="container">
+            <% if (news && news.length > 0) { %>
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <!-- Left Column -->
+                    <div class="left-column">
+                        <!-- Featured Article (First Article) -->
+                        <% const featured = news[0]; %>
+                        <article class="featured-article">
+                            <img src="<%= featured.image || 'https://images.unsplash.com/photo-1547496502-89578615235f?w=800' %>" 
+                                 alt="<%= featured.title %>" 
+                                 class="featured-image">
+                            <div class="featured-content">
+                                <div class="article-badges">
+                                    <% if (featured.is_breaking) { %>
+                                        <span class="badge breaking"><i class="fas fa-exclamation-circle"></i> BREAKING</span>
+                                    <% } %>
+                                    <% if (featured.is_trending) { %>
+                                        <span class="badge trending"><i class="fas fa-fire"></i> TRENDING</span>
+                                    <% } %>
+                                    <% if (featured.is_featured) { %>
+                                        <span class="badge featured"><i class="fas fa-star"></i> FEATURED</span>
+                                    <% } %>
+                                </div>
+                                <span class="featured-category">
+                                    <i class="fas fa-tag"></i> <%= featured.category_name || 'News' %>
+                                </span>
+                                <h2 class="featured-title">
+                                    <a href="/article/<%= featured.id %>"><%= featured.title %></a>
+                                </h2>
+                                <div class="featured-meta">
+                                    <span><i class="far fa-user"></i> <%= featured.author || 'ONNIEONE Staff' %></span>
+                                    <span><i class="far fa-calendar"></i> <%= new Date(featured.published_at).toLocaleDateString() %></span>
+                                    <span><i class="far fa-clock"></i> <%= new Date(featured.published_at).toLocaleTimeString() %></span>
+                                    <span><i class="far fa-eye"></i> <%= featured.views || 0 %> views</span>
+                                </div>
+                                <p class="featured-summary"><%= featured.summary || featured.content.substring(0, 200) + '...' %></p>
+                                <a href="/article/<%= featured.id %>" class="read-more-btn">
+                                    Read Full Article <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- News Grid (Remaining Articles) -->
+                        <% if (news.length > 1) { %>
+                            <div class="news-grid">
+                                <% for(let i = 1; i < Math.min(news.length, 5); i++) { %>
+                                    <article class="news-card">
+                                        <img src="<%= news[i].image || 'https://images.unsplash.com/photo-1547496502-89578615235f?w=400' %>" 
+                                             alt="<%= news[i].title %>" 
+                                             class="news-card-image">
+                                        <div class="news-card-content">
+                                            <% if (news[i].is_trending) { %>
+                                                <span style="color: #dc2626; font-size: 0.8rem;">
+                                                    <i class="fas fa-fire"></i> Trending
+                                                </span>
+                                            <% } %>
+                                            <h3 class="news-card-title">
+                                                <a href="/article/<%= news[i].id %>"><%= news[i].title %></a>
+                                            </h3>
+                                            <div class="news-card-meta">
+                                                <span><i class="far fa-clock"></i> <%= new Date(news[i].published_at).toLocaleDateString() %></span>
+                                                <span><i class="far fa-eye"></i> <%= news[i].views || 0 %></span>
+                                            </div>
+                                        </div>
+                                    </article>
+                                <% } %>
+                            </div>
+                        <% } %>
+
+                        <!-- Load More Button -->
+                        <% if (news.length > 5) { %>
+                            <div class="load-more-container">
+                                <button class="load-more-btn" onclick="loadMoreNews()">
+                                    <i class="fas fa-sync-alt"></i> Load More Articles
+                                </button>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <!-- Right Column - Sidebar -->
+                    <div class="sidebar">
+                        <!-- Trending Widget -->
+                        <div class="sidebar-widget">
+                            <h3 class="widget-title">
+                                <i class="fas fa-fire"></i> Trending Now
+                                <span>Hot</span>
+                            </h3>
+                            <div class="trending-list">
+                                <% 
+                                    const trendingNews = news.filter(n => n.is_trending).slice(0, 5);
+                                    trendingNews.forEach((item, index) => { 
+                                %>
+                                    <div class="trending-item">
+                                        <span class="trending-number"><%= index + 1 %></span>
+                                        <div class="trending-content">
+                                            <div class="trending-title">
+                                                <a href="/article/<%= item.id %>"><%= item.title %></a>
+                                            </div>
+                                            <div class="trending-meta">
+                                                <i class="far fa-eye"></i> <%= item.views || 0 %> views
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        </div>
+
+                        <!-- Categories Widget -->
+                        <div class="sidebar-widget">
+                            <h3 class="widget-title">
+                                <i class="fas fa-list"></i> Categories
+                            </h3>
+                            <div class="category-cloud">
+                                <a href="/category/sports" class="category-tag">
+                                    <i class="fas fa-futbol"></i> Sports
+                                </a>
+                                <a href="/category/politics" class="category-tag">
+                                    <i class="fas fa-landmark"></i> Politics
+                                </a>
+                                <a href="/category/business" class="category-tag">
+                                    <i class="fas fa-chart-line"></i> Business
+                                </a>
+                                <a href="/category/entertainment" class="category-tag">
+                                    <i class="fas fa-film"></i> Entertainment
+                                </a>
+                                <a href="/category/technology" class="category-tag">
+                                    <i class="fas fa-microchip"></i> Technology
+                                </a>
+                                <a href="/category/health" class="category-tag">
+                                    <i class="fas fa-heartbeat"></i> Health
+                                </a>
+                                <a href="/category/education" class="category-tag">
+                                    <i class="fas fa-graduation-cap"></i> Education
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Latest News Widget -->
+                        <div class="sidebar-widget">
+                            <h3 class="widget-title">
+                                <i class="fas fa-clock"></i> Latest Updates
+                            </h3>
+                            <div class="trending-list">
+                                <% 
+                                    const latestNews = news.slice(0, 3);
+                                    latestNews.forEach(item => { 
+                                %>
+                                    <div class="trending-item">
+                                        <div class="trending-content">
+                                            <div class="trending-title">
+                                                <a href="/article/<%= item.id %>"><%= item.title %></a>
+                                            </div>
+                                            <div class="trending-meta">
+                                                <i class="far fa-clock"></i> <%= new Date(item.published_at).toLocaleDateString() %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Region Info Cards -->
+                <div class="region-info-cards">
+                    <div class="info-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>About Rwanda</h3>
+                        <p>The Land of a Thousand Hills, known for its stunning landscapes, vibrant culture, and remarkable progress.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Population</h3>
+                        <p>13+ million people, with Kigali as the bustling capital city and economic hub.</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-language"></i>
+                        <h3>Languages</h3>
+                        <p>Kinyarwanda, French, English, and Swahili - a multilingual nation.</p>
+                    </div>
+                </div>
+
+                <!-- Newsletter Box -->
+                <div class="newsletter-box">
+                    <h3><i class="fas fa-envelope"></i> Stay Updated</h3>
+                    <p>Get the latest Rwanda news delivered to your inbox</p>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                        <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                        <button type="submit" class="newsletter-btn">Subscribe</button>
+                    </form>
+                </div>
+
+            <% } else { %>
+                <!-- No News Yet -->
+                <div style="text-align: center; padding: 80px 0; background: white; border-radius: 10px;">
+                    <i class="fas fa-newspaper" style="font-size: 5rem; color: #dc2626; margin-bottom: 20px;"></i>
+                    <h2 style="color: #1a1a1a; margin-bottom: 10px;">No News Articles Yet</h2>
+                    <p style="color: #6c757d; max-width: 400px; margin: 0 auto;">Check back soon for the latest updates and news from <%= region.name %>.</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+
+    <script>
+        // Filter functionality
+        function filterNews(type) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Here you would implement actual filtering
+            // For now, just reload with filter parameter
+            window.location.href = '/region/<%= region.slug %>?filter=' + type;
+        }
+
+        // Sort functionality
+        function sortNews(order) {
+            window.location.href = '/region/<%= region.slug %>?sort=' + order;
+        }
+
+        // Load more articles
+        function loadMoreNews() {
+            // Implement pagination
+            alert('Loading more articles...');
+        }
+
+        // Newsletter subscription
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input').value;
+            alert('Thank you for subscribing to Rwanda news updates!');
+            event.target.reset();
+        }
+
+        // Share article function
+        function shareArticle(title, url) {
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    url: url
+                });
+            } else {
+                alert('Share this article: ' + url);
+            }
+        }
+
+        // Save for later
+        function saveArticle(id) {
+            let saved = localStorage.getItem('savedArticles') || '[]';
+            saved = JSON.parse(saved);
+            if (!saved.includes(id)) {
+                saved.push(id);
+                localStorage.setItem('savedArticles', JSON.stringify(saved));
+                alert('Article saved for later!');
+            } else {
+                alert('Article already saved');
+            }
+        }
+    </script>
+</body>
+</html>

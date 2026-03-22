@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= article.title_en %> - <%= settings.site_name || 'ONNIEONE NEWS' %>
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/style-homepage.css">
+    <style>
+        .article-main-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            margin: 40px 0;
+        }
+
+        .article-title-header {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: #000;
+        }
+
+        .article-full-image {
+            width: 100%;
+            max-height: 600px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .article-body-content {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .article-body-content p {
+            margin-bottom: 20px;
+        }
+
+        .author-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- TOP HEADER SECTION -->
+    <div class="top-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="real-time">
+                    <span class="live-badge"><i class="fas fa-circle"></i> LIVE</span>
+                    <span style="color: #ffd700; font-size: 0.9rem; margin-left:15px;">Trending now in <%=
+                            article.category_name %></span>
+                </div>
+                <div class="search-bar">
+                    <form action="/search" method="GET" style="display: flex; width: 100%;">
+                        <input type="text" name="q" placeholder="Search news...">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGO SECTION -->
+    <div class="logo-section">
+        <div class="container">
+            <div class="logo-grid" style="grid-template-columns: 1fr 2fr 1fr;">
+                <div class="logo-box">
+                    <img src="/images/onieone-logo.png" alt="Logo">
+                </div>
+                <div class="logo-box">
+                    <a href="/" class="main-logo">
+                        <%= settings.site_name || 'ONNIEONE' %> <span>NEWS</span>
+                    </a>
+                </div>
+                <div class="logo-box">
+                    <!-- Space for header ad if needed -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="nav-section">
+        <div class="container">
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="/"><i class="fas fa-home"></i> Ahabanza</a></li>
+                <% if (categories && categories.length> 0) {
+                    categories.slice(0, 6).forEach(cat => { %>
+                    <li class="nav-item <%= cat.name_en === article.category_name ? 'active' : '' %>">
+                        <a href="/category/<%= cat.slug %>"><i class="<%= cat.icon %>"></i>
+                            <%= cat.name_en %>
+                        </a>
+                    </li>
+                    <% }); } %>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="article-main-container">
+            <div class="featured-badge" style="margin-bottom:20px;">
+                <%= article.category_name %>
+            </div>
+            <h1 class="article-title-header">
+                <%= article.title_en %>
+            </h1>
+
+            <div class="article-meta" style="margin-bottom:30px; border-bottom:1px solid #eee; padding-bottom:15px;">
+                <span style="margin-right:20px;"><i class="far fa-calendar"></i>
+                    <%= new Date(article.published_at).toLocaleDateString() %>
+                </span>
+                <span style="margin-right:20px;"><i class="far fa-eye"></i>
+                    <%= article.views || 0 %> Views
+                </span>
+                <span><i class="far fa-user"></i> Staff Reporter</span>
+            </div>
+
+            <% if (article.image_url) { %>
+                <img src="<%= article.image_url %>" alt="<%= article.title_en %>" class="article-full-image">
+                <% } %>
+
+                    <div class="article-body-content">
+                        <%- article.content_en %>
+                    </div>
+
+                    <div class="author-box">
+                        <div
+                            style="width:50px; height:50px; background:#dc2626; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; font-size:1.2rem;">
+                            O</div>
+                        <div>
+                            <h4 style="margin:0;">ONNIEONE Editorial Team</h4>
+                            <p style="margin:0; color:#666; font-size:0.9rem;">Rwanda's leading digital newsroom</p>
+                        </div>
+                    </div>
+        </div>
+
+        <!-- Related Articles -->
+        <% if (related && related.length> 0) { %>
+            <div style="margin: 40px 0;">
+                <h3 class="column-title"><i class="fas fa-link"></i> Related News</h3>
+                <div class="main-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <% related.forEach(rel=> { %>
+                        <div class="featured-article" style="height: auto;">
+                            <img src="<%= rel.image_url || 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=500' %>"
+                                alt="Related" style="height:150px;">
+                            <div class="featured-content" style="padding:15px;">
+                                <h4 style="font-size:0.95rem; margin-bottom:10px;"><a href="/article/<%= rel.id %>"
+                                        style="color:#000; text-decoration:none;">
+                                        <%= rel.title_en %>
+                                    </a></h4>
+                                <a href="/article/<%= rel.id %>"
+                                    style="color:#dc2626; font-size:0.8rem; text-decoration:none; font-weight:bold;">READ
+                                    MORE <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <% }); %>
+                </div>
+            </div>
+            <% } %>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>ONNIEONE NEWS</h4>
+                    <p style="color: #9ca3af;">
+                        <%= settings.site_description %>
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 <%= settings.site_name %>. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple mobile menu toggle if needed
+        const btn = document.getElementById("mobileMenuBtn");
+        const menu = document.getElementById("navMenu");
+        if (btn && menu) {
+            btn.addEventListener("click", () => {
+                menu.classList.toggle("show");
+            });
+        }
+    </script>
+</body>
+
+</html>

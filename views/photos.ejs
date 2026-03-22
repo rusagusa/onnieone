@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= t('Photos', 'Photos', 'Amashusho') %> - ONNIEONE News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            border-bottom: 3px solid #dc2626;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .page-header h1 span {
+            color: #dc2626;
+        }
+        
+        .photos-section {
+            padding: 60px 0;
+            background: #f9fafb;
+        }
+        
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .photo-card {
+            position: relative;
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .photo-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: white;
+        }
+        
+        .photo-overlay h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .photo-overlay p {
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+        
+        .no-photos {
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 12px;
+            color: #6b7280;
+            grid-column: 1/-1;
+        }
+        
+        .no-photos i {
+            font-size: 4rem;
+            color: #dc2626;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 1024px) {
+            .photos-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .photos-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .photos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+    <div class="page-header">
+        <div class="container">
+            <h1><span><%= t('Photo', 'Photo', 'Ifoto') %></span> <%= t('Gallery', 'Galerie', 'Ingero') %></h1>
+            <p><%= t('Browse our photo collections', 'Parcourez nos collections de photos', 'Reba amashusho yacu') %></p>
+        </div>
+    </div>
+    
+    <section class="photos-section">
+        <div class="container">
+            <% if (photos && photos.length > 0) { %>
+                <div class="photos-grid">
+                    <% photos.forEach(photo => { %>
+                        <a href="/photo/<%= photo.id %>" class="photo-card">
+                            <img src="<%= photo.cover_image || 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=500' %>" alt="<%= photo.title_en %>">
+                            <div class="photo-overlay">
+                                <h3><%= photo.title_en %></h3>
+                                <p><i class="far fa-images"></i> <%= photo.images ? JSON.parse(photo.images).length : 0 %> photos</p>
+                            </div>
+                        </a>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <div class="no-photos">
+                    <i class="fas fa-images"></i>
+                    <h3><%= t('No photo galleries available', 'Aucune galerie photo disponible', 'Nta mashusho aboneka') %></h3>
+                    <p><%= t('Check back soon for photo galleries', 'Revenez bientôt pour des galeries photos', 'Garuka vuba urebe amashusho mashya') %></p>
+                </div>
+            <% } %>
+        </div>
+    </section>
+    
+    <%- include('partials/footer') %>
+</body>
+</html>

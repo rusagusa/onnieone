@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Trending - ONNIEONE Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <style>
+        .trending-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .trending-filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .trending-card {
+            background: var(--pure-white);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary-red);
+            transition: all 0.3s;
+        }
+        
+        .trending-card:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .trending-stats {
+            display: flex;
+            gap: 30px;
+            margin: 15px 0;
+        }
+        
+        .stat-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: var(--gray-100);
+            border-radius: 30px;
+        }
+        
+        .stat-badge i {
+            color: var(--primary-red);
+        }
+        
+        .trending-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 15px;
+        }
+        
+        .btn-trending {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-trending:hover {
+            background: var(--secondary-red);
+        }
+        
+        .btn-remove {
+            background: var(--gray-200);
+            color: var(--gray-700);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        
+        .btn-remove:hover {
+            background: var(--gray-300);
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-sidebar">
+        <div class="sidebar-header">
+            <h2><span>ONNIEONE</span> NEWS</h2>
+            <p>Admin Panel</p>
+        </div>
+        
+        <div class="sidebar-menu">
+            <div class="menu-section">Main</div>
+            <a href="/admin/dashboard" class="menu-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="/admin/news" class="menu-item">
+                <i class="fas fa-newspaper"></i>
+                <span>All News</span>
+            </a>
+            <a href="/admin/news/add" class="menu-item">
+                <i class="fas fa-plus-circle"></i>
+                <span>Add News</span>
+            </a>
+            
+            <div class="menu-divider"></div>
+            <div class="menu-section">Content</div>
+            <a href="/admin/categories" class="menu-item">
+                <i class="fas fa-list"></i>
+                <span>Categories</span>
+            </a>
+            <a href="/admin/regions" class="menu-item">
+                <i class="fas fa-globe"></i>
+                <span>Regions</span>
+            </a>
+            <a href="/admin/comments" class="menu-item">
+                <i class="fas fa-comments"></i>
+                <span>Comments</span>
+            </a>
+            <a href="/admin/media" class="menu-item">
+                <i class="fas fa-images"></i>
+                <span>Media Library</span>
+            </a>
+            
+            <div class="menu-divider"></div>
+            <div class="menu-section">Tools</div>
+            <a href="/admin/trending" class="menu-item active">
+                <i class="fas fa-fire"></i>
+                <span>Find Trending</span>
+            </a>
+            <a href="/admin/settings" class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            
+            <div class="menu-divider"></div>
+            <a href="/" target="_blank" class="menu-item">
+                <i class="fas fa-external-link-alt"></i>
+                <span>View Site</span>
+            </a>
+            <a href="/admin/logout" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="admin-main">
+        <div class="top-bar">
+            <div class="page-title">
+                <h1>Find Trending Content</h1>
+                <p>Analyze and manage trending articles</p>
+            </div>
+            <div class="user-info">
+                <span>Welcome, Admin</span>
+                <div class="user-avatar">A</div>
+            </div>
+        </div>
+
+        <div class="trending-header">
+            <h2><i class="fas fa-fire" style="color: var(--primary-red);"></i> Trending Analysis</h2>
+            <div class="trending-filters">
+                <select class="select-control" style="width: 150px;">
+                    <option>Last 24 Hours</option>
+                    <option>Last 7 Days</option>
+                    <option>Last 30 Days</option>
+                </select>
+                <select class="select-control" style="width: 150px;">
+                    <option>All Categories</option>
+                    <option>Sports</option>
+                    <option>Entertainment</option>
+                    <option>Politics</option>
+                    <option>Business</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="stats-grid" style="margin-bottom: 30px;">
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Total Views</h3>
+                    <div class="number">45.2K</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-eye"></i></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Trending Now</h3>
+                    <div class="number">12</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-fire"></i></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Top Category</h3>
+                    <div class="number">Sports</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-futbol"></i></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3>Avg. Engagement</h3>
+                    <div class="number">2.5min</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2 style="margin-bottom: 20px;">🔥 Top Trending Articles</h2>
+            
+            <div class="trending-card">
+                <div style="display: flex; justify-content: space-between;">
+                    <h3>Rwanda National Team Prepares for World Cup Qualifiers</h3>
+                    <span class="status-badge status-published">Trending #1</span>
+                </div>
+                <div class="trending-stats">
+                    <div class="stat-badge"><i class="fas fa-eye"></i> 12.5K views</div>
+                    <div class="stat-badge"><i class="fas fa-comment"></i> 234 comments</div>
+                    <div class="stat-badge"><i class="fas fa-share"></i> 89 shares</div>
+                    <div class="stat-badge"><i class="fas fa-clock"></i> Last 24h</div>
+                </div>
+                <div class="trending-actions">
+                    <button class="btn-trending"><i class="fas fa-fire"></i> Keep Trending</button>
+                    <button class="btn-remove"><i class="fas fa-times"></i> Remove</button>
+                </div>
+            </div>
+
+            <div class="trending-card">
+                <div style="display: flex; justify-content: space-between;">
+                    <h3>Parliament Passes New Investment Bill to Boost Economy</h3>
+                    <span class="status-badge status-published">Trending #2</span>
+                </div>
+                <div class="trending-stats">
+                    <div class="stat-badge"><i class="fas fa-eye"></i> 8.2K views</div>
+                    <div class="stat-badge"><i class="fas fa-comment"></i> 156 comments</div>
+                    <div class="stat-badge"><i class="fas fa-share"></i> 45 shares</div>
+                    <div class="stat-badge"><i class="fas fa-clock"></i> Last 24h</div>
+                </div>
+                <div class="trending-actions">
+                    <button class="btn-trending"><i class="fas fa-fire"></i> Keep Trending</button>
+                    <button class="btn-remove"><i class="fas fa-times"></i> Remove</button>
+                </div>
+            </div>
+
+            <div class="trending-card">
+                <div style="display: flex; justify-content: space-between;">
+                    <h3>New Tech Hub Launches in Kigali Innovation City</h3>
+                    <span class="status-badge status-published">Trending #3</span>
+                </div>
+                <div class="trending-stats">
+                    <div class="stat-badge"><i class="fas fa-eye"></i> 6.8K views</div>
+                    <div class="stat-badge"><i class="fas fa-comment"></i> 98 comments</div>
+                    <div class="stat-badge"><i class="fas fa-share"></i> 67 shares</div>
+                    <div class="stat-badge"><i class="fas fa-clock"></i> Last 24h</div>
+                </div>
+                <div class="trending-actions">
+                    <button class="btn-trending"><i class="fas fa-fire"></i> Keep Trending</button>
+                    <button class="btn-remove"><i class="fas fa-times"></i> Remove</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container" style="margin-top: 30px;">
+            <h2 style="margin-bottom: 20px;">📊 Trending by Category</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Total Articles</th>
+                        <th>Total Views</th>
+                        <th>Trending Now</th>
+                        <th>Engagement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><i class="fas fa-futbol" style="color: var(--primary-red);"></i> Sports</td>
+                        <td>24</td>
+                        <td>12.5K</td>
+                        <td><span class="status-badge status-published">4 trending</span></td>
+                        <td>85%</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-landmark" style="color: var(--primary-red);"></i> Politics</td>
+                        <td>32</td>
+                        <td>8.2K</td>
+                        <td><span class="status-badge status-published">3 trending</span></td>
+                        <td>72%</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-film" style="color: var(--primary-red);"></i> Entertainment</td>
+                        <td>18</td>
+                        <td>6.8K</td>
+                        <td><span class="status-badge status-published">2 trending</span></td>
+                        <td>68%</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-chart-line" style="color: var(--primary-red);"></i> Business</td>
+                        <td>21</td>
+                        <td>4.3K</td>
+                        <td><span class="status-badge status-published">2 trending</span></td>
+                        <td>61%</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-laugh" style="color: var(--primary-red);"></i> Comedy</td>
+                        <td>15</td>
+                        <td>2.8K</td>
+                        <td><span class="status-badge status-published">1 trending</span></td>
+                        <td>54%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

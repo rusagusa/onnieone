@@ -1,0 +1,111 @@
+<!-- Ad Spaces -->
+<div class="ad-container">
+    <!-- Leaderboard Ad -->
+    <div class="ad-leaderboard">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+</div>
+
+<!-- Sidebar Ad -->
+<div class="ad-sidebar">
+    <div class="ad-label"><%= t('Advertisement', 'Publicité', 'Kwamamaza') %></div>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="rectangle"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<!-- Native Ad -->
+<div class="ad-native">
+    <div class="ad-badge"><%= t('Sponsored', 'Sponsorisé', 'Iteguriwe') %></div>
+    <div class="native-ad-content">
+        <img src="/images/ad-placeholder.jpg" alt="Ad">
+        <div class="native-ad-text">
+            <h4><%= t('Special Offer', 'Offre Spéciale', 'Umugisha Wihariye') %></h4>
+            <p><%= t('Click to learn more', 'Cliquez pour en savoir plus', 'Kanda urebe byinshi') %></p>
+        </div>
+    </div>
+</div>
+
+<style>
+.ad-container {
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.ad-leaderboard {
+    min-height: 90px;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ad-sidebar {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.ad-label {
+    color: #95a5a6;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ad-native {
+    border: 1px solid #ecf0f1;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.ad-badge {
+    background: #34495e;
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.native-ad-content {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: white;
+}
+
+.native-ad-content img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+}
+
+.native-ad-text h4 {
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.native-ad-text p {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin: 0;
+}
+</style>

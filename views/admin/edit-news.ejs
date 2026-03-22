@@ -1,0 +1,120 @@
+<%- layout('admin/layout', { 
+    pageTitle: 'Edit Article', 
+    currentPage: 'news',
+    user: user 
+}) %>
+
+<div class="content-card">
+    <div class="card-header">
+        <h2><i class="fas fa-edit"></i> Edit Article</h2>
+    </div>
+    
+    <% if (error) { %>
+        <div class="alert alert-error"><%= error %></div>
+    <% } %>
+    
+    <form action="/admin/news/edit/<%= article.id %>
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Title (English) *</label>
+            <input type="text" name="title_en" class="form-control" value="<%= article.title_en %>" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Title (French)</label>
+            <input type="text" name="title_fr" class="form-control" value="<%= article.title_fr || '' %>">
+        </div>
+        
+        <div class="form-group">
+            <label>Title (Kinyarwanda)</label>
+            <input type="text" name="title_rw" class="form-control" value="<%= article.title_rw || '' %>">
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Category *</label>
+                <select name="category_id" class="form-control" required>
+                    <option value="">Select Category</option>
+                    <% categories.forEach(cat => { %>
+                        <option value="<%= cat.id %>" <%= cat.id == article.category_id ? 'selected' : '' %>>
+                            <%= cat.name_en %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status" class="form-control">
+                    <option value="published" <%= article.status === 'published' ? 'selected' : '' %>>Published</option>
+                    <option value="draft" <%= article.status === 'draft' ? 'selected' : '' %>>Draft</option>
+                    <option value="pending" <%= article.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Summary</label>
+            <textarea name="summary_en" class="form-control" rows="3"><%= article.summary_en || '' %></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Content (English) *</label>
+            <textarea name="content_en" class="form-control" rows="10" required><%= article.content_en %></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Content (French)</label>
+            <textarea name="content_fr" class="form-control" rows="10"><%= article.content_fr || '' %></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Content (Kinyarwanda)</label>
+            <textarea name="content_rw" class="form-control" rows="10"><%= article.content_rw || '' %></textarea>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Featured Image</label>
+                <input type="file" name="image" class="form-control" accept="image/*">
+                <% if (article.image_url) { %>
+                    <p>Current: <img src="<%= article.image_url %>" style="max-width: 100px; margin-top: 10px;"></p>
+                <% } %>
+            </div>
+            
+            <div class="form-group">
+                <label>Author</label>
+                <input type="text" name="author" class="form-control" value="<%= article.author || user.full_name || user.username %>">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Source Name</label>
+                <input type="text" name="source_name" class="form-control" value="<%= article.source_name || '' %>">
+            </div>
+            
+            <div class="form-group">
+                <label>Source URL</label>
+                <input type="url" name="source_url" class="form-control" value="<%= article.source_url || '' %>">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="is_featured" value="1" <%= article.is_featured ? 'checked' : '' %>> Featured Article
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="is_breaking" value="1" <%= article.is_breaking ? 'checked' : '' %>> Breaking News
+                </label>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Update Article</button>
+        <a href="/admin/news" class="btn">Cancel</a>
+    </form>
+</div>

@@ -1,0 +1,125 @@
+CREATE TABLE users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE,
+        password TEXT,
+        role TEXT DEFAULT 'editor',
+        full_name TEXT,
+        email TEXT,
+        is_active INTEGER DEFAULT 1,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+
+CREATE TABLE sqlite_sequence(name,seq)
+
+CREATE TABLE categories (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name_en TEXT,
+        slug TEXT UNIQUE,
+        icon TEXT,
+        description TEXT,
+        is_active INTEGER DEFAULT 1,
+        order_position INTEGER DEFAULT 0
+    )
+
+CREATE TABLE articles (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title_en TEXT,
+        content_en TEXT,
+        category_id INTEGER,
+        image_url TEXT,
+        source_name TEXT,
+        source_url TEXT,
+        author_id INTEGER,
+        views INTEGER DEFAULT 0,
+        is_trending INTEGER DEFAULT 0,
+        is_featured INTEGER DEFAULT 0,
+        is_breaking INTEGER DEFAULT 0,
+        status TEXT DEFAULT 'draft',
+        published_at DATETIME,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (category_id) REFERENCES categories(id),
+        FOREIGN KEY (author_id) REFERENCES users(id)
+    )
+
+CREATE TABLE breaking_news (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        article_id INTEGER,
+        slide_order INTEGER DEFAULT 0,
+        is_active INTEGER DEFAULT 1,
+        FOREIGN KEY (article_id) REFERENCES articles(id)
+    )
+
+CREATE TABLE advertisements (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT,
+        image_url TEXT,
+        link_url TEXT,
+        position TEXT,
+        is_active INTEGER DEFAULT 1,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+
+CREATE TABLE auction_news (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title_en TEXT,
+        price TEXT,
+        location TEXT,
+        end_date DATETIME,
+        is_active INTEGER DEFAULT 1,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+
+CREATE TABLE announcements (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title_en TEXT,
+        content_en TEXT,
+        priority TEXT DEFAULT 'normal',
+        is_active INTEGER DEFAULT 1,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+
+CREATE TABLE today_history (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        year INTEGER,
+        event_en TEXT,
+        is_active INTEGER DEFAULT 1,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+
+CREATE TABLE real_time_updates (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        content_en TEXT,
+        priority INTEGER DEFAULT 0,
+        is_active INTEGER DEFAULT 1,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+
+CREATE TABLE site_settings (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        setting_key TEXT UNIQUE,
+        setting_value TEXT
+    )
+
+CREATE TABLE comments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        article_id INTEGER,
+        name TEXT,
+        email TEXT,
+        comment TEXT,
+        is_approved INTEGER DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (article_id) REFERENCES articles(id)
+    )
+
+CREATE TABLE media (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        filename TEXT,
+        original_name TEXT,
+        path TEXT,
+        type TEXT,
+        size INTEGER,
+        uploaded_by INTEGER,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (uploaded_by) REFERENCES users(id)
+    )

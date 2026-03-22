@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search: <%= query %> - ONNIEONE NEWS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .result { background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        a { color: #000; text-decoration: none; }
+        a:hover { color: #dc2626; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search Results for "<%= query %>"</h1>
+        <a href="/">← Back to Home</a>
+        
+        <% if (results && results.length > 0) { %>
+            <% results.forEach(result => { %>
+                <div class="result">
+                    <h3><a href="/article/<%= result.id %>"><%= result.title_en %></a></h3>
+                    <p><%= result.summary_en || result.content_en.substring(0, 150) + '...' %></p>
+                    <small>Category: <%= result.category_name %></small>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No results found for "<%= query %>".</p>
+        <% } %>
+    </div>
+</body>
+</html>

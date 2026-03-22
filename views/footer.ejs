@@ -1,0 +1,130 @@
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <span class="logo-onnieone">ONNIEONE</span>
+                        <span class="logo-news">NEWS</span>
+                    </div>
+                    <p>Africa's trusted source for breaking news, in-depth analysis, and stories that matter.</p>
+                    <div class="footer-social">
+                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/trending">Trending</a></li>
+                        <li><a href="/categories">Categories</a></li>
+                        <li><a href="/regions">Regions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="/category/sports">Sports</a></li>
+                        <li><a href="/category/entertainment">Entertainment</a></li>
+                        <li><a href="/category/politics">Politics</a></li>
+                        <li><a href="/category/business">Business</a></li>
+                        <li><a href="/category/comedy">Comedy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Follow Us</h4>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 ONNIEONE NEWS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <style>
+        .site-footer {
+            background: #000;
+            color: white;
+            padding: 60px 0 20px;
+            margin-top: 50px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-about p {
+            color: #9ca3af;
+            line-height: 1.8;
+            margin: 20px 0;
+        }
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .footer-logo .logo-onnieone { color: white; }
+        .footer-logo .logo-news { color: #dc2626; }
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        .footer-social a:hover {
+            background: #dc2626;
+            transform: translateY(-3px);
+        }
+        .footer-links h4 {
+            color: white;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dc2626;
+        }
+        .footer-links ul {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        .footer-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: #dc2626;
+        }
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            text-align: center;
+            color: #666;
+        }
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</body>
+</html>

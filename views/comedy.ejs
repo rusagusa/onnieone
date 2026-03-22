@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comedy Corner - ONNIEONE News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/category.css">
+</head>
+<body>
+    <!-- Professional Header - Black Background -->
+<header style="background: #000000; border-bottom: 3px solid #dc2626; position: sticky; top: 0; z-index: 1000;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+        <a href="/" style="font-size: 24px; font-weight: bold; color: #ffffff; text-decoration: none;">
+            <span style="color: #dc2626;">ONNIEONE</span> NEWS
+        </a>
+        <nav style="display: flex; gap: 30px; align-items: center;">
+            <a href="/" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-home" style="color: #dc2626;"></i> Home
+            </a>
+            <a href="/categories" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-list" style="color: #dc2626;"></i> Categories
+            </a>
+            <a href="/regions" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-globe" style="color: #dc2626;"></i> Regions
+            </a>
+            <a href="/trending" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-fire" style="color: #dc2626;"></i> Trending
+            </a>
+            <a href="/region/rwanda" style="color: #ffffff; text-decoration: none; font-weight: 500; transition: none; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-map-marker-alt" style="color: #dc2626;"></i> Rwanda
+            </a>
+            <form action="/search" method="GET" style="display: flex; align-items: center; background: #1a1a1a; border-radius: 30px; padding: 8px 15px; border: 1px solid #333;">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                <input type="text" name="q" placeholder="Search news..." style="background: transparent; border: none; color: #ffffff; padding: 5px; outline: none; width: 200px; font-size: 14px;">
+                <button type="submit" style="background: transparent; border: none; color: #dc2626; cursor: pointer;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </nav>
+    </div>
+</header>
+
+<style>
+    nav a:hover {
+        color: #dc2626 !important;
+    }
+    nav a:hover i {
+        transform: scale(1.1);
+        transition: none;
+    }
+    @media (max-width: 768px) {
+        header > div {
+            flex-direction: column;
+            gap: 15px;
+        }
+        nav {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+</style>
+
+        <div class="category-header" style="background: #000000 !important; border-bottom: 4px solid #dc2626; padding: 80px 0; text-align: center; position: relative;">
+        <div class="container">
+            <div class="category-icon" style="font-size: 80px; margin-bottom: 25px; color: #dc2626;">
+                <i class="fas fa-laugh-squint"></i>
+            </div>
+            <h1 style="font-size: 48px; font-weight: 800; margin-bottom: 20px; color: #ffffff; text-shadow: 2px 2px 0 #dc2626;">😂 COMEDY ZONE 😂</h1>
+            <p style="font-size: 18px; max-width: 700px; margin: 0 auto; background: rgba(255,255,255,0.1); padding: 15px 35px; border-radius: 50px; color: #ffffff; border: 1px solid #dc2626; display: inline-block;">Your daily dose of laughter and funny news</p>
+        </div>
+    </div>
+            <h1>😂 COMEDY ZONE 😂</h1>
+            <p>Your daily dose of laughter and funny news</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-section" style="background: #ffffff;">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">Jokes Today</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2.3k</div>
+                    <div class="stat-label">Laughs Shared</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24</div>
+                    <div class="stat-label">Viral Jokes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1.2k</div>
+                    <div class="stat-label">Happy Readers</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="joke-section" style="background: #000000;">
+        <div class="container">
+            <span class="joke-badge"><i class="fas fa-star"></i> JOKE OF THE DAY</span>
+            <div class="joke-text" id="jokeOfTheDay">Why don't scientists trust atoms? Because they make up everything!</div>
+            <button class="joke-button" onclick="newJoke()"><i class="fas fa-sync-alt"></i> Another Joke</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="main-content">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-newspaper"></i> Funny Stories</h2>
+                    <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="news-grid">
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1527224857830-43a7acc85260?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Stand-up</span>
+                            <h3 class="news-title"><a href="#">Why Did the Chicken Cross the Road? 10 Hilarious Answers</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2 hours ago</span>
+                                <span><i class="far fa-laugh"></i> 234 laughs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Skits</span>
+                            <h3 class="news-title"><a href="#">10 Jokes That Will Make Your Day Better</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 5 hours ago</span>
+                                <span><i class="far fa-laugh"></i> 567 laughs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1509822929063-6b6cfc9b42f2?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Comedian</span>
+                            <h3 class="news-title"><a href="#">Interview: Rwanda's Funniest Comedian Shares Stories</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 1 day ago</span>
+                                <span><i class="far fa-laugh"></i> 892 laughs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Puns</span>
+                            <h3 class="news-title"><a href="#">The Best Puns of 2026 That Will Make You Groan</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2 days ago</span>
+                                <span><i class="far fa-laugh"></i> 1.2k laughs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Quick Laughs</h3>
+                    </div>
+                    
+                    <div class="list-item">
+                        <span class="item-rank">😄</span>
+                        <div class="item-info">
+                            <div class="item-title">What do you call a fake noodle?</div>
+                        </div>
+                        <span class="item-value">234</span>
+                    </div>
+                    
+                    <div class="list-item">
+                        <span class="item-rank">🤣</span>
+                        <div class="item-info">
+                            <div class="item-title">An impasta!</div>
+                        </div>
+                        <span class="item-value">189</span>
+                    </div>
+                    
+                    <div class="list-item">
+                        <span class="item-rank">😆</span>
+                        <div class="item-info">
+                            <div class="item-title">Why did the scarecrow win?</div>
+                        </div>
+                        <span class="item-value">156</span>
+                    </div>
+                    
+                    <div class="list-item">
+                        <span class="item-rank">😂</span>
+                        <div class="item-info">
+                            <div class="item-title">Outstanding in his field!</div>
+                        </div>
+                        <span class="item-value">142</span>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Comedy Challenge</h3>
+                    </div>
+                    
+                    <div class="challenge-box">
+                        <i class="fas fa-microphone challenge-icon"></i>
+                        <h3 class="challenge-title">Got a funny joke?</h3>
+                        <p style="color: var(--gray-600); margin-bottom: 15px;">Submit your best joke and win prizes!</p>
+                        <button class="challenge-btn" onclick="submitJoke()">
+                            <i class="fas fa-pen"></i> Submit Joke
+                        </button>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Laugh Meter</h3>
+                    </div>
+                    
+                    <div class="laugh-meter">
+                        <div class="meter-title">Today's Laughter Level</div>
+                        <div class="meter-bar">
+                            <div class="meter-fill"></div>
+                        </div>
+                        <div class="meter-value">75%</div>
+                        <p style="color: var(--gray-400); margin-top: 10px;">Keep laughing! 😂</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const jokes = [
+            "Why don't scientists trust atoms? Because they make up everything!",
+            "What do you call a fake noodle? An impasta!",
+            "Why did the scarecrow win an award? He was outstanding in his field!",
+            "What do you call a bear with no teeth? A gummy bear!",
+            "Why don't eggs tell jokes? They'd crack each other up!",
+            "What do you call a sleeping bull? A bulldozer!",
+            "Why did the math book look sad? Because it had too many problems!",
+            "What do you call a fish wearing a bowtie? Sofishticated!",
+            "Why can't you give Elsa a balloon? Because she will let it go!",
+            "What do you call a lazy kangaroo? A pouch potato!"
+        ];
+
+        function newJoke() {
+            const jokeElement = document.getElementById('jokeOfTheDay');
+            const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+            jokeElement.style.opacity = '0';
+            setTimeout(() => {
+                jokeElement.textContent = randomJoke;
+                jokeElement.style.opacity = '1';
+            }, 300);
+        }
+
+        function submitJoke() {
+            const joke = prompt("Share your funniest joke with us! What's your best joke?");
+            if (joke && joke.trim() !== '') {
+                alert("😂 Thanks for the laugh! Your joke has been submitted for review!");
+            }
+        }
+
+        // Auto-change joke every 30 seconds
+        setInterval(newJoke, 30000);
+    </script>
+
+    <!-- Professional Footer - Black, White, Red, Gray -->
+<footer style="background: #000000; color: #ffffff; padding: 60px 0 30px; margin-top: 60px; border-top: 4px solid #dc2626;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        <!-- Footer Grid -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-bottom: 40px;">
+            <!-- About Column -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-laugh-squint"></i> Comedy
+                </h3>
+                <p style="color: #9ca3af; line-height: 1.8; margin-bottom: 20px;">Your daily dose of laughter, jokes, and funny news to brighten your day and put a smile on your face.</p>
+                <div style="display: flex; gap: 15px;">
+                    <a href="#" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: all 0.3s;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: all 0.3s;">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: all 0.3s;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@onnieoneEntertainment" target="_blank" style="width: 40px; height: 40px; background: #1a1a1a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9ca3af; transition: all 0.3s;">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-link"></i> Quick Links
+                </h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 12px;"><a href="/trending" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-fire" style="color: #dc2626; font-size: 12px;"></i> Trending Now</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/categories" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-list" style="color: #dc2626; font-size: 12px;"></i> All Categories</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/regions" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-globe" style="color: #dc2626; font-size: 12px;"></i> Regions</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/about" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-info-circle" style="color: #dc2626; font-size: 12px;"></i> About Us</a></li>
+                    <li style="margin-bottom: 12px;"><a href="/contact" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-envelope" style="color: #dc2626; font-size: 12px;"></i> Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Joke Categories -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-tags"></i> Joke Categories
+                </h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-microphone" style="color: #dc2626; font-size: 12px;"></i> Stand-up</a></li>
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-theater-masks" style="color: #dc2626; font-size: 12px;"></i> Skits</a></li>
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-puzzle-piece" style="color: #dc2626; font-size: 12px;"></i> Puns</a></li>
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-mask" style="color: #dc2626; font-size: 12px;"></i> Satire</a></li>
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.3s; display: flex; align-items: center; gap: 8px;"><i class="fas fa-dog" style="color: #dc2626; font-size: 12px;"></i> Animal Jokes</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div>
+                <h3 style="color: #dc2626; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-envelope"></i> Newsletter
+                </h3>
+                <p style="color: #9ca3af; margin-bottom: 15px;">Get daily jokes in your inbox!</p>
+                <form style="display: flex; background: #1a1a1a; border-radius: 30px; padding: 5px; border: 1px solid #333;">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                    <input type="email" placeholder="Your email" style="flex: 1; background: transparent; border: none; padding: 12px 15px; color: #ffffff; outline: none;">
+                    <button type="submit" style="background: #dc2626; color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: background 0.3s;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div style="text-align: center; padding-top: 30px; border-top: 1px solid #333;">
+            <p style="color: #9ca3af; font-size: 14px;">
+                &copy; 2026 <span style="color: #dc2626;">ONNIEONE NEWS</span>. All rights reserved. | 
+                <a href="/privacy" style="color: #9ca3af; text-decoration: none; transition: color 0.3s;">Privacy</a> | 
+                <a href="/terms" style="color: #9ca3af; text-decoration: none; transition: color 0.3s;">Terms</a> | 
+                <a href="/advertise" style="color: #9ca3af; text-decoration: none; transition: color 0.3s;">Advertise</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer a:hover {
+        color: #dc2626 !important;
+    }
+    footer .social-links a:hover {
+        background: #dc2626 !important;
+        color: white !important;
+        transform: translateY(-3px);
+    }
+    @media (max-width: 768px) {
+        footer > div > div:first-child {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+    }
+    @media (max-width: 480px) {
+        footer > div > div:first-child {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+</body>
+</html>

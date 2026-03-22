@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add News - ONNIEONE NEWS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin-enhanced.css">
+    <style>
+        .lang-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .lang-tab {
+            padding: 12px 25px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-weight: 600;
+            color: #6b7280;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .lang-tab.active {
+            color: #dc2626;
+            border-bottom-color: #dc2626;
+        }
+        
+        .lang-tab:hover {
+            color: #dc2626;
+        }
+        
+        .lang-content {
+            display: none;
+        }
+        
+        .lang-content.active {
+            display: block;
+        }
+        
+        .feature-tags {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar (same as dashboard) -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2><span>ONNIEONE</span> NEWS</h2>
+                <p>Admin Panel</p>
+            </div>
+            
+            <div class="sidebar-menu">
+                <div class="menu-category">MAIN</div>
+                <a href="/admin/dashboard" class="menu-item">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="/admin/news" class="menu-item">
+                    <i class="fas fa-newspaper"></i> All News
+                </a>
+                <a href="/admin/news/add" class="menu-item active">
+                    <i class="fas fa-plus-circle"></i> Add News
+                </a>
+                
+                <div class="menu-category">CONTENT</div>
+                <a href="/admin/categories" class="menu-item">
+                    <i class="fas fa-list"></i> Categories
+                </a>
+                <a href="/admin/featured" class="menu-item">
+                    <i class="fas fa-star"></i> Featured Articles
+                </a>
+                <a href="/admin/breaking" class="menu-item">
+                    <i class="fas fa-bolt"></i> Breaking News
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>Add News Article</h1>
+                    <p>Create a new article with multilingual support</p>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <%= user.full_name ? user.full_name.charAt(0).toUpperCase() : 'A' %>
+                    </div>
+                    <a href="/admin/logout" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+
+            <!-- Alerts -->
+            <% if (error) { %>
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <%= error %>
+                </div>
+            <% } %>
+
+            <!-- Add News Form -->
+            <div class="content-card">
+                <form action="/admin/news/add" method="POST" enctype="multipart/form-data" id="newsForm">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                    <!-- Feature Tags -->
+                    <div class="feature-tags">
+                        <label class="form-check">
+                            <input type="checkbox" name="is_featured" value="1">
+                            <i class="fas fa-star" style="color: #f59e0b;"></i> Featured Article
+                        </label>
+                        <label class="form-check">
+                            <input type="checkbox" name="is_breaking" value="1">
+                            <i class="fas fa-bolt" style="color: #dc2626;"></i> Breaking News
+                        </label>
+                        <label class="form-check">
+                            <input type="checkbox" name="is_trending" value="1">
+                            <i class="fas fa-fire" style="color: #ef4444;"></i> Trending
+                        </label>
+                    </div>
+
+                    <!-- Language Tabs -->
+                    <div class="lang-tabs">
+                        <button type="button" class="lang-tab active" onclick="switchLang('en')">
+                            <i class="fas fa-language"></i> English
+                        </button>
+                        <button type="button" class="lang-tab" onclick="switchLang('fr')">
+                            <i class="fas fa-language"></i> Français
+                        </button>
+                        <button type="button" class="lang-tab" onclick="switchLang('rw')">
+                            <i class="fas fa-language"></i> Kinyarwanda
+                        </button>
+                    </div>
+
+                    <!-- English Content -->
+                    <div id="lang-en" class="lang-content active">
+                        <div class="form-group">
+                            <label>Title (English) *</label>
+                            <input type="text" name="title_en" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Summary (English)</label>
+                            <textarea name="summary_en" class="form-control" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Content (English) *</label>
+                            <textarea name="content_en" class="form-control" rows="10" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- French Content -->
+                    <div id="lang-fr" class="lang-content">
+                        <div class="form-group">
+                            <label>Titre (Français)</label>
+                            <input type="text" name="title_fr" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Résumé (Français)</label>
+                            <textarea name="summary_fr" class="form-control" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Contenu (Français)</label>
+                            <textarea name="content_fr" class="form-control" rows="10"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Kinyarwanda Content -->
+                    <div id="lang-rw" class="lang-content">
+                        <div class="form-group">
+                            <label>Umutwe (Kinyarwanda)</label>
+                            <input type="text" name="title_rw" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Incamake (Kinyarwanda)</label>
+                            <textarea name="summary_rw" class="form-control" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Ibiyirimo (Kinyarwanda)</label>
+                            <textarea name="content_rw" class="form-control" rows="10"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Common Fields -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Category *</label>
+                            <select name="category_id" class="form-control" required>
+                                <option value="">Select Category</option>
+                                <% categories.forEach(cat => { %>
+                                    <option value="<%= cat.id %>"><%= cat.name_en %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select name="status" class="form-control">
+                                <option value="published">Published</option>
+                                <option value="draft">Draft</option>
+                                <option value="pending">Pending Review</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Featured Image</label>
+                            <input type="file" name="image" class="form-control" accept="image/*" onchange="previewImage(this)">
+                            <div class="image-preview" id="imagePreview"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Author</label>
+                            <input type="text" name="author" class="form-control" value="<%= user.full_name || user.username %>">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Source Name</label>
+                            <input type="text" name="source_name" class="form-control" placeholder="e.g., Reuters, BBC">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Source URL</label>
+                            <input type="url" name="source_url" class="form-control" placeholder="https://...">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tags (comma separated)</label>
+                        <input type="text" name="tags" class="form-control" placeholder="rwanda, politics, economy">
+                    </div>
+
+                    <div class="form-group">
+                        <label>SEO Meta Description</label>
+                        <textarea name="meta_description" class="form-control" rows="2" maxlength="160"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Publish Article</button>
+                    <a href="/admin/news" class="btn btn-outline">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            // Hide all language content
+            document.querySelectorAll('.lang-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.lang-tab').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Show selected language
+            document.getElementById('lang-' + lang).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+        
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = '<img src="' + e.target.result + '" style="max-width: 100%;">';
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.innerHTML = '';
+            }
+        }
+    </script>
+</body>
+</html>

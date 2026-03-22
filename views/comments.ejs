@@ -1,0 +1,268 @@
+<div class="comments-section">
+    <h3 class="comments-title">
+        <i class="fas fa-comments"></i> 
+        <%= t('Comments', 'Commentaires', 'Ibitekerezo') %> (<%= comments.length %>)
+    </h3>
+    
+    <!-- Comment Form -->
+    <form action="/article/<%= article.id %>
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">/comment" method="POST" class="comment-form">
+        <div class="form-row">
+            <input type="text" name="name" placeholder="<%= t('Your name', 'Votre nom', 'Izina ryawe') %>" required>
+            <input type="email" name="email" placeholder="<%= t('Your email', 'Votre email', 'Imeri yawe') %>" required>
+        </div>
+        <textarea name="comment" placeholder="<%= t('Share your thoughts...', 'Partagez vos pensées...', 'Tangia igitekerezo cyawe...') %>" required></textarea>
+        <button type="submit" class="submit-comment">
+            <i class="fas fa-paper-plane"></i> 
+            <%= t('Post Comment', 'Publier', 'Ohereza') %>
+        </button>
+    </form>
+    
+    <!-- Comments List -->
+    <div class="comments-list">
+        <% comments.forEach(comment => { %>
+            <div class="comment-item" id="comment-<%= comment.id %>">
+                <div class="comment-avatar">
+                    <%= comment.name ? comment.name.charAt(0).toUpperCase() : 'U' %>
+                </div>
+                <div class="comment-content">
+                    <div class="comment-header">
+                        <h4><%= comment.name %></h4>
+                        <span class="comment-date">
+                            <i class="far fa-clock"></i> 
+                            <%= new Date(comment.created_at).toLocaleDateString() %>
+                        </span>
+                    </div>
+                    <p class="comment-text"><%= comment.comment %></p>
+                    <div class="comment-actions">
+                        <button class="like-btn" data-id="<%= comment.id %>">
+                            <i class="<%= comment.user_liked ? 'fas' : 'far' %> fa-heart"></i> 
+                            <%= comment.likes || 0 %>
+                        </button>
+                        <button class="reply-btn" data-id="<%= comment.id %>">
+                            <i class="far fa-comment"></i> 
+                            <%= t('Reply', 'Répondre', 'Subiza') %>
+                        </button>
+                        <span class="comment-share">
+                            <i class="far fa-share-square"></i>
+                        </span>
+                    </div>
+                    
+                    <!-- Reply Form (hidden by default) -->
+                    <div class="reply-form" id="reply-<%= comment.id %>" style="display: none;">
+                        <textarea placeholder="<%= t('Write your reply...', 'Écrivez votre réponse...', 'Andika igisubizo...') %>"></textarea>
+                        <button class="submit-reply">Reply</button>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<style>
+.comments-section {
+    margin: 40px 0;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.comments-title {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ecf0f1;
+}
+
+.comment-form {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.comment-form input,
+.comment-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.comment-form input:focus,
+.comment-form textarea:focus {
+    border-color: #e74c3c;
+    outline: none;
+}
+
+.comment-form textarea {
+    height: 100px;
+    resize: vertical;
+    margin-bottom: 15px;
+}
+
+.submit-comment {
+    background: #e74c3c;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.submit-comment:hover {
+    background: #c0392b;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comment-item {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border: 1px solid #ecf0f1;
+    border-radius: 10px;
+}
+
+.comment-avatar {
+    width: 50px;
+    height: 50px;
+    background: #e74c3c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comment-header h4 {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.comment-date {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.comment-text {
+    color: #34495e;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 20px;
+}
+
+.comment-actions button {
+    background: none;
+    border: none;
+    color: #7f8c8d;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.comment-actions button:hover {
+    color: #e74c3c;
+    background: #f8f9fa;
+}
+
+.comment-actions button i.fas {
+    color: #e74c3c;
+}
+
+.reply-form {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed #ecf0f1;
+}
+
+.reply-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    height: 60px;
+}
+
+.submit-reply {
+    background: #34495e;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submit-reply:hover {
+    background: #2c3e50;
+}
+</style>
+
+<script>
+document.querySelectorAll('.reply-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        document.getElementById(`reply-${id}`).style.display = 'block';
+    });
+});
+
+document.querySelectorAll('.like-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+        const response = await fetch(`/comment/${id}/like`, { method: 'POST', headers: { 'CSRF-Token': '<%= typeof csrfToken !== \'undefined\' ? csrfToken : \'\' %>' } });
+        const data = await response.json();
+        if (data.success) {
+            const icon = btn.querySelector('i');
+            icon.classList.toggle('far');
+            icon.classList.toggle('fas');
+            btn.innerHTML = `<i class="${icon.className}"></i> ${data.likes}`;
+        }
+    });
+});
+</script>

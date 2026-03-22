@@ -1,0 +1,115 @@
+<%- layout('admin/layout', { 
+    pageTitle: 'Add News Article', 
+    currentPage: 'add-news',
+    user: user 
+}) %>
+
+<div class="content-card">
+    <div class="card-header">
+        <h2><i class="fas fa-plus-circle"></i> Add New Article</h2>
+    </div>
+    
+    <% if (error) { %>
+        <div class="alert alert-error"><%= error %></div>
+    <% } %>
+    
+    <form action="/admin/news/add" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <div class="form-group">
+            <label>Title (English) *</label>
+            <input type="text" name="title_en" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Title (French)</label>
+            <input type="text" name="title_fr" class="form-control">
+        </div>
+        
+        <div class="form-group">
+            <label>Title (Kinyarwanda)</label>
+            <input type="text" name="title_rw" class="form-control">
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Category *</label>
+                <select name="category_id" class="form-control" required>
+                    <option value="">Select Category</option>
+                    <% categories.forEach(cat => { %>
+                        <option value="<%= cat.id %>"><%= cat.name_en %></option>
+                    <% }); %>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status" class="form-control">
+                    <option value="published">Published</option>
+                    <option value="draft">Draft</option>
+                    <option value="pending">Pending</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Summary</label>
+            <textarea name="summary_en" class="form-control" rows="3"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Content (English) *</label>
+            <textarea name="content_en" class="form-control" rows="10" required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Content (French)</label>
+            <textarea name="content_fr" class="form-control" rows="10"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Content (Kinyarwanda)</label>
+            <textarea name="content_rw" class="form-control" rows="10"></textarea>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Featured Image</label>
+                <input type="file" name="image" class="form-control" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label>Author</label>
+                <input type="text" name="author" class="form-control" value="<%= user.full_name || user.username %>">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Source Name</label>
+                <input type="text" name="source_name" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label>Source URL</label>
+                <input type="url" name="source_url" class="form-control">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="is_featured" value="1"> Featured Article
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="is_breaking" value="1"> Breaking News
+                </label>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Publish Article</button>
+        <a href="/admin/news" class="btn">Cancel</a>
+    </form>
+</div>

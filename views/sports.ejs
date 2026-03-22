@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports News - ONNIEONE News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/category.css">
+    <style>
+
+    /* Simplified Sports Header - Solid Black Background */
+    .sports-header {
+        background: #000000 !important;
+        position: relative;
+        padding: 80px 0;
+        text-align: center;
+        border-bottom: 4px solid #dc2626;
+    }
+
+    .sports-header::before,
+    .sports-header::after {
+        display: none !important;
+    }
+
+    .sports-header .category-icon {
+        font-size: 80px;
+        margin-bottom: 25px;
+        color: #dc2626;
+    }
+
+    .sports-header h1 {
+        font-size: 48px;
+        font-weight: 800;
+        margin-bottom: 20px;
+        color: #ffffff;
+        text-shadow: 2px 2px 0 #dc2626;
+        letter-spacing: 2px;
+    }
+
+    .sports-header p {
+        font-size: 18px;
+        max-width: 700px;
+        margin: 0 auto;
+        background: rgba(255,255,255,0.1);
+        padding: 15px 35px;
+        border-radius: 50px;
+        color: #ffffff;
+        border: 1px solid #dc2626;
+        display: inline-block;
+    }
+
+    /* Remove floating balls animation */
+    .floating-balls,
+    .ball {
+        display: none !important;
+    }
+
+    /* Simplified Footer - Solid Black Background */
+    .sports-footer {
+        background: #000000 !important;
+        color: white;
+        padding: 60px 0 30px;
+        margin-top: 60px;
+        border-top: 4px solid #dc2626;
+    }
+
+    .sports-footer::before {
+        display: none !important;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .footer-column h3 {
+        color: #dc2626;
+        font-size: 20px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #dc2626;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .footer-column h3::after {
+        display: none !important;
+    }
+
+    .footer-column ul {
+        list-style: none;
+    }
+
+    .footer-column ul li {
+        margin-bottom: 12px;
+    }
+
+    .footer-column ul li a {
+        color: #e5e5e5;
+        text-decoration: none;
+        transition: color 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .footer-column ul li a:hover {
+        color: #dc2626;
+    }
+
+    .footer-column ul li a i {
+        color: #dc2626;
+        font-size: 14px;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .social-links a {
+        width: 45px;
+        height: 45px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+        transition: background-color 0.3s;
+        border: 1px solid #dc2626;
+    }
+
+    .social-links a:hover {
+        background: #dc2626;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer-bottom p {
+        color: #e5e5e5;
+        font-size: 14px;
+    }
+
+    .footer-bottom span {
+        color: #dc2626;
+        font-weight: bold;
+    }
+
+    /* Newsletter Form */
+    .newsletter-form {
+        display: flex;
+        margin-top: 20px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 40px;
+        padding: 5px;
+        border: 1px solid #dc2626;
+    }
+
+    .newsletter-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        padding: 12px 20px;
+        color: white;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .newsletter-input::placeholder {
+        color: rgba(255,255,255,0.5);
+    }
+
+    .newsletter-btn {
+        background: #dc2626;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 40px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        letter-spacing: 1px;
+    }
+
+    .newsletter-btn:hover {
+        background: #b91c1c;
+    }
+
+    /* Remove all animations */
+    @keyframes bounceRotate,
+    @keyframes glowPulse,
+    @keyframes borderGlow,
+    @keyframes floatBall,
+    @keyframes footerPulse,
+    @keyframes lineWidth,
+    @keyframes pulse {
+        display: none !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .footer-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .sports-header h1 {
+            font-size: 36px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .footer-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .sports-header h1 {
+            font-size: 28px;
+        }
+    }
+
+
+    /* Header Styles - Matching Homepage */
+    .main-header {
+        background: #000000;
+        padding: 15px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 3px solid #dc2626;
+    }
+
+    .header-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .logo span {
+        color: #dc2626;
+    }
+
+    .nav-menu {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .nav-menu a {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        font-size: 16px;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+        color: #dc2626;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        background: #1a1a1a;
+        border-radius: 30px;
+        padding: 8px 15px;
+        border: 1px solid #333;
+    }
+
+    .search-box input {
+        background: transparent;
+        border: none;
+        color: #ffffff;
+        padding: 5px;
+        outline: none;
+        width: 200px;
+        font-size: 14px;
+    }
+
+    .search-box input::placeholder {
+        color: #666;
+    }
+
+    .search-box button {
+        background: transparent;
+        border: none;
+        color: #dc2626;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+    .search-box button:hover {
+        color: #ffffff;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .header-container {
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .nav-menu {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .search-box input {
+            width: 150px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .nav-menu {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .search-box {
+            width: 100%;
+        }
+        
+        .search-box input {
+            width: 100%;
+        }
+    }
+
+</style>
+</head>
+<body>
+    <!-- Main Header - Black Background -->
+<header class="main-header">
+    <div class="header-container">
+        <a href="/" class="logo"><span>ONNIEONE</span> NEWS</a>
+        <nav class="nav-menu">
+            <a href="/" class="active"><i class="fas fa-home"></i> Home</a>
+            <a href="/categories"><i class="fas fa-list"></i> Categories</a>
+            <a href="/regions"><i class="fas fa-globe"></i> Regions</a>
+            <a href="/trending"><i class="fas fa-fire"></i> Trending</a>
+            <a href="/region/rwanda"><i class="fas fa-map-marker-alt"></i> Rwanda</a>
+            <form action="/search" method="GET" class="search-box">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                <input type="text" name="q" placeholder="Search news..." required>
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </nav>
+    </div>
+</header>
+
+    <div class="category-header sports-header">
+        <div class="container">
+            <div class="category-icon"><i class="fas fa-futbol"></i></div>
+            <h1>⚽ SPORTS ZONE ⚽</h1>
+            <p>Live scores, match updates, and breaking sports news</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">24</div>
+                    <div class="stat-label">Live Matches</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">Today's Games</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Active Leagues</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2.3k</div>
+                    <div class="stat-label">Sports News</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ticker">
+        <div class="container">
+            <div class="ticker-wrap">
+                <div class="ticker-move">
+                    <span class="ticker-item"><i class="fas fa-futbol"></i> APR FC 2 - 1 Rayon Sports <span>● LIVE</span></span>
+                    <span class="ticker-item"><i class="fas fa-basketball-ball"></i> Patriots 89 - 76 REG <span>● 4th Q</span></span>
+                    <span class="ticker-item"><i class="fas fa-baseball-ball"></i> Eagles 5 - 3 Hawks <span>● 7th</span></span>
+                    <span class="ticker-item"><i class="fas fa-volleyball-ball"></i> Rwanda 3 - 1 Kenya <span>● FINAL</span></span>
+                    <span class="ticker-item"><i class="fas fa-futbol"></i> AS Kigali 1 - 0 Police <span>● 2nd Half</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="main-content">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-newspaper"></i> Latest Sports News</h2>
+                    <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="news-grid">
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Football</span>
+                            <h3 class="news-title"><a href="#">Rwanda National Team Prepares for World Cup Qualifiers</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2 hours ago</span>
+                                <span><i class="far fa-eye"></i> 1.2k views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Basketball</span>
+                            <h3 class="news-title"><a href="#">Patriots Extend Winning Streak to 10 Games</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 5 hours ago</span>
+                                <span><i class="far fa-eye"></i> 856 views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Athletics</span>
+                            <h3 class="news-title"><a href="#">Rwandan Athletes Shine in International Marathon</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 1 day ago</span>
+                                <span><i class="far fa-eye"></i> 2.1k views</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=500" class="news-image">
+                        <div class="news-content">
+                            <span class="news-category">Tennis</span>
+                            <h3 class="news-title"><a href="#">Rwandan Tennis Star Advances to Quarterfinals</a></h3>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2 days ago</span>
+                                <span><i class="far fa-eye"></i> 3.4k views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-trophy"></i>
+                        <h3>League Standings</h3>
+                    </div>
+                    <table class="league-table">
+                        <tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr>
+                        <tr><td class="team-rank">1</td><td>APR FC</td><td>18</td><td>14</td><td>3</td><td>1</td><td>45</td></tr>
+                        <tr><td class="team-rank">2</td><td>Rayon Sports</td><td>18</td><td>12</td><td>4</td><td>2</td><td>40</td></tr>
+                        <tr><td class="team-rank">3</td><td>AS Kigali</td><td>18</td><td>11</td><td>5</td><td>2</td><td>38</td></tr>
+                        <tr><td class="team-rank">4</td><td>Police FC</td><td>18</td><td>10</td><td>4</td><td>4</td><td>34</td></tr>
+                        <tr><td class="team-rank">5</td><td>Mukura</td><td>18</td><td>9</td><td>5</td><td>4</td><td>32</td></tr>
+                    </table>
+                </div>
+
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fas fa-star"></i>
+                        <h3>Top Scorers</h3>
+                    </div>
+                    <div class="list-item">
+                        <span class="item-rank">1</span>
+                        <div class="item-info">
+                            <div class="item-title">John MUGABO</div>
+                            <div class="item-subtitle">APR FC</div>
+                        </div>
+                        <span class="item-value">15</span>
+                    </div>
+                    <div class="list-item">
+                        <span class="item-rank">2</span>
+                        <div class="item-info">
+                            <div class="item-title">Eric KAYITARE</div>
+                            <div class="item-subtitle">Rayon Sports</div>
+                        </div>
+                        <span class="item-value">12</span>
+                    </div>
+                    <div class="list-item">
+                        <span class="item-rank">3</span>
+                        <div class="item-info">
+                            <div class="item-title">Peter UWIMANA</div>
+                            <div class="item-subtitle">AS Kigali</div>
+                        </div>
+                        <span class="item-value">10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Enhanced Sports Footer -->
+    <footer class="sports-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3><i class="fas fa-futbol"></i> Sports Zone</h3>
+                    <p style="color: #e5e5e5; line-height: 1.8; margin-bottom: 20px;">Your premier destination for live scores, match updates, and breaking sports news from around the world.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@onnieoneEntertainment" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3><i class="fas fa-futbol"></i> Sports</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-futbol"></i> Football</a></li>
+                        <li><a href="#"><i class="fas fa-basketball-ball"></i> Basketball</a></li>
+                        <li><a href="#"><i class="fas fa-table-tennis"></i> Tennis</a></li>
+                        <li><a href="#"><i class="fas fa-running"></i> Athletics</a></li>
+                        <li><a href="#"><i class="fas fa-volleyball-ball"></i> Volleyball</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3><i class="fas fa-link"></i> Quick Links</h3>
+                    <ul>
+                        <li><a href="https://www.livescore.com/en/" target="_blank" rel="noopener noreferrer"><i class="fas fa-chart-line"></i> Live Scores</a></li>
+                        <li><a href="https://www.livescore.com/en/" target="_blank" rel="noopener noreferrer"><i class="fas fa-calendar-alt"></i> Match Schedule</a></li>
+                        <li><a href="#"><i class="fas fa-trophy"></i> League Tables</a></li>
+                        <li><a href="https://www.livescore.com/en/" target="_blank" rel="noopener noreferrer"><i class="fas fa-star"></i> Top Scorers</a></li>
+                        <li><a href="https://www.footballtransfers.com/en" target="_blank" rel="noopener noreferrer"><i class="fas fa-newspaper"></i> Transfer News <span style="color: #dc2626; font-size: 12px; margin-left: 5px;">(Fabrizio Romano)</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3><i class="fas fa-envelope"></i> Newsletter</h3>
+                    <p style="color: #e5e5e5; margin-bottom: 15px;">Get the latest sports news delivered to your inbox!</p>
+                    <form class="newsletter-form">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                        <input type="email" class="newsletter-input" placeholder="Your email address" required>
+                        <button type="submit" class="newsletter-btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 <span>ONNIEONE SPORTS</span>. All rights reserved. | Live scores, breaking news, and in-depth analysis</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

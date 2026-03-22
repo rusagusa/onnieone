@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="<%= settings.site_description || 'Latest news and updates from Rwanda and around the world' %>">
+    <meta name="keywords" content="Rwanda news, Africa news, breaking news, politics, sports, entertainment">
+    <meta property="og:title" content="<%= settings.site_name || 'ONNIEONE NEWS' %>">
+    <meta property="og:description"
+        content="<%= settings.site_description || 'Latest news and updates from Rwanda and around the world' %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://onnieone.com">
+    <meta property="og:image" content="/placeholder-logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>
+        <%= settings.site_name || 'ONNIEONE NEWS' %> - Rwanda's Premier News Platform
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/style-homepage.css">
+</head>
+
+<body>
+    <!-- TOP HEADER SECTION - BLACK BACKGROUND -->
+    <div class="top-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="real-time">
+                    <span class="live-badge"><i class="fas fa-circle"></i> LIVE</span>
+                    <div class="ticker">
+                        <div class="ticker-content">
+                            <% if (updates && updates.length> 0) {
+                                updates.forEach(update => { %>
+                                <span class="ticker-item"><i class="fas fa-bolt"></i>
+                                    <%= update.content_en %>
+                                </span>
+                                <% }); } else { %>
+                                    <span class="ticker-item"><i class="fas fa-bolt"></i> Breaking: Rwanda launches new
+                                        tourism initiative</span>
+                                    <span class="ticker-item"><i class="fas fa-bolt"></i> Kigali hosts African tech
+                                        summit</span>
+                                    <span class="ticker-item"><i class="fas fa-bolt"></i> Gorilla population reaches
+                                        1000</span>
+                                    <% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-bar">
+                    <form action="/search" method="GET" style="display: flex; width: 100%;">
+                        <input type="hidden" name="_csrf"
+                            value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                        <input type="text" name="q" placeholder="Search news...">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGO & SPONSOR SECTION -->
+    <div class="logo-section">
+        <div class="container">
+            <div class="logo-grid">
+                <div class="logo-box">
+                    <img src="/images/onieone-logo.png" alt="ONNIEONE NEWS" onerror="this.style.display='none'">
+                </div>
+                <div class="logo-box">
+                    <a href="/" class="main-logo">ONNIEONE <span>NEWS</span></a>
+                </div>
+                <div class="logo-box">
+                    <div class="sponsor-banner">
+                        <% if (ads && ads.find(a=> a.location === 'header')) { %>
+                            <img src="<%= ads.find(a => a.location === 'header').image_url %>" alt="Sponsor">
+                            <% } else { %>
+                                <i class="fas fa-ad" style="font-size: 2rem; color: #dc2626;"></i>
+                                <p style="margin-top: 10px;">Sponsor Banner</p>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION CATEGORIES -->
+    <nav class="nav-section">
+        <div class="container">
+            <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i> Navigation Menu</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="/"><i class="fas fa-home"></i> Ahabanza</a></li>
+                <% if (categories && categories.length> 0) {
+                    categories.filter(c => c.slug !== 'home' && c.is_active).sort((a,b) => a.order_position -
+                    b.order_position).forEach(cat => { %>
+                    <li class="nav-item"><a href="/category/<%= cat.slug %>"><i class="<%= cat.icon %>"></i>
+                            <%= cat.name_en %>
+                        </a></li>
+                    <% }); } %>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- BREAKING NEWS SECTION - 3 COLUMN -->
+    <div class="container">
+        <div class="breaking-section">
+            <!-- Sliding Breaking News (2 seconds interval) -->
+            <div class="slider-container">
+                <div class="slider-header">
+                    <i class="fas fa-bolt"></i> BREAKING NEWS
+                </div>
+                <div class="slider-content" id="breakingSlider">
+                    <% if (breakingNews && breakingNews.length> 0) {
+                        breakingNews.forEach((news, index) => { %>
+                        <div class="slide <%= index === 0 ? 'active' : '' %>">
+                            <img src="<%= news.image_url || 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=500' %>"
+                                alt="<%= news.title_en %>">
+                            <div class="slide-info">
+                                <h3><a href="/article/<%= news.article_id %>">
+                                        <%= news.title_en %>
+                                    </a></h3>
+                                <div class="slide-meta">
+                                    <i class="far fa-clock"></i>
+                                    <%= new Date().toLocaleTimeString() %>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); } else { %>
+                            <div class="slide active">
+                                <img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=500"
+                                    alt="Breaking News">
+                                <div class="slide-info">
+                                    <h3><a href="#">Rwanda launches new initiative to boost tourism</a></h3>
+                                    <div class="slide-meta">
+                                        <i class="far fa-clock"></i>
+                                        <%= new Date().toLocaleTimeString() %>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slide">
+                                <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=500"
+                                    alt="Breaking News">
+                                <div class="slide-info">
+                                    <h3><a href="#">Kigali hosts East African business summit</a></h3>
+                                    <div class="slide-meta">
+                                        <i class="far fa-clock"></i>
+                                        <%= new Date().toLocaleTimeString() %>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                </div>
+            </div>
+
+            <!-- One Featured Big Article -->
+            <div class="featured-article">
+                <% if (featuredArticle) { %>
+                    <img src="<%= featuredArticle.image_url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=500' %>"
+                        alt="<%= featuredArticle.title_en %>">
+                    <div class="featured-content">
+                        <span class="featured-badge"><i class="fas fa-star"></i> FEATURED</span>
+                        <h3 class="featured-title"><a href="/article/<%= featuredArticle.id %>">
+                                <%= featuredArticle.title_en %>
+                            </a></h3>
+                        <div class="featured-meta">
+                            <span><i class="far fa-calendar"></i>
+                                <%= new Date(featuredArticle.published_at).toLocaleDateString() %>
+                            </span>
+                            <span><i class="far fa-eye"></i>
+                                <%= featuredArticle.views || 0 %> views
+                            </span>
+                        </div>
+                        <a href="/article/<%= featuredArticle.id %>" class="btn-read-more"
+                            style="display:inline-block; margin-top:15px; background:#dc2626; color:white; padding:8px 15px; border-radius:5px; text-decoration:none; font-weight:bold; font-size:0.9rem;">READ
+                            MORE</a>
+                    </div>
+                    <% } else { %>
+                        <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=500" alt="Featured">
+                        <div class="featured-content">
+                            <span class="featured-badge">FEATURED</span>
+                            <h3 class="featured-title"><a href="#">Rwanda's Mountain Gorillas: A Conservation Success
+                                    Story</a></h3>
+                            <div class="featured-meta">
+                                <span><i class="far fa-calendar"></i>
+                                    <%= new Date().toLocaleDateString() %>
+                                </span>
+                                <span><i class="far fa-eye"></i> 1,234 views</span>
+                            </div>
+                        </div>
+                        <% } %>
+            </div>
+
+            <!-- Advertisement Section (300x250) -->
+            <div class="ad-section">
+                <% if (ads && ads.find(a=> a.location === 'breaking')) { %>
+                    <img src="<%= ads.find(a => a.location === 'breaking').image_url %>" alt="Ad">
+                    <% } else { %>
+                        <div style="text-align: center;">
+                            <i class="fas fa-ad" style="font-size: 3rem; color: #9ca3af;"></i>
+                            <p style="margin-top: 10px;">Advertisement<br>300x250</p>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+
+        <!-- Banner Advertisement (728x90) -->
+        <div class="banner-ad">
+            <% if (ads && ads.find(a=> a.location === 'banner')) { %>
+                <img src="<%= ads.find(a => a.location === 'banner').image_url %>" alt="Banner Ad">
+                <% } else { %>
+                    <i class="fas fa-ad" style="font-size: 2rem; color: #9ca3af; margin-right: 10px;"></i>
+                    <span>Banner Advertisement - 728x90</span>
+                    <% } %>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT - 4 COLUMN LAYOUT -->
+    <div class="container">
+        <div class="main-grid">
+            <!-- Column 1: Latest Articles List -->
+            <div class="column">
+                <h3 class="column-title"><i class="fas fa-clock"></i> Latest Articles</h3>
+                <ul class="article-list">
+                    <% if (articles && articles.length> 0) {
+                        articles.slice(0, 8).forEach(article => {
+                        const pubDate = new Date(article.published_at);
+                        const today = new Date();
+                        const isToday = pubDate.toDateString() === today.toDateString();
+                        %>
+                        <li class="article-item">
+                            <div class="article-date">
+                                <i class="far fa-calendar"></i>
+                                <%= pubDate.toLocaleDateString() %>
+                                    <% if (isToday) { %>
+                                        <span class="time"><i class="far fa-clock"></i>
+                                            <%= pubDate.toLocaleTimeString([], {hour: '2-digit' , minute:'2-digit'}) %>
+                                        </span>
+                                        <% } %>
+                            </div>
+                            <h4><a href="/article/<%= article.id %>">
+                                    <%= article.title_en %>
+                                </a></h4>
+                            <div class="article-views"><i class="far fa-eye"></i>
+                                <%= article.views || 0 %> views
+                            </div>
+                            <a href="/article/<%= article.id %>"
+                                style="color:#dc2626; font-size:0.85rem; text-decoration:none; font-weight:600; display:block; margin-top:5px;">Read
+                                More <i class="fas fa-arrow-right" style="font-size:0.7rem;"></i></a>
+                        </li>
+                        <% }); } else { %>
+                            <li class="article-item">No articles yet</li>
+                            <% } %>
+                </ul>
+
+                <!-- Small Ad Section (300x250) -->
+                <div class="ad-space ad-300x250">
+                    <% if (ads && ads.find(a=> a.size_width === 300 && a.size_height === 250 && a.location ===
+                        'sidebar')) { %>
+                        <img src="<%= ads.find(a => a.size_width === 300 && a.size_height === 250 && a.location === 'sidebar').image_url %>"
+                            alt="Ad">
+                        <% } else { %>
+                            300x250 Ad
+                            <% } %>
+                </div>
+            </div>
+
+            <!-- Column 2: Small Ad Section & Auction News -->
+            <div class="column">
+                <!-- Small Ad (300x250) -->
+                <div class="ad-space ad-300x250" style="margin-top: 0;">
+                    <% if (ads && ads.find(a=> a.size_width === 300 && a.size_height === 250 && a.location ===
+                        'sidebar2')) { %>
+                        <img src="<%= ads.find(a => a.size_width === 300 && a.size_height === 250 && a.location === 'sidebar2').image_url %>"
+                            alt="Ad">
+                        <% } else { %>
+                            300x250 Ad
+                            <% } %>
+                </div>
+
+                <!-- Auction News -->
+                <h3 class="column-title"><i class="fas fa-gavel"></i> Auction News</h3>
+                <% if (auctions && auctions.length> 0) {
+                    auctions.forEach(auction => { %>
+                    <div class="auction-item">
+                        <h4>
+                            <%= auction.title_en %>
+                        </h4>
+                        <div class="auction-price">
+                            <%= auction.price || 'Price on request' %>
+                        </div>
+                        <div class="auction-location"><i class="fas fa-map-marker-alt"></i>
+                            <%= auction.location || 'Kigali' %>
+                        </div>
+                        <div class="auction-end">Ends: <%= new Date(auction.end_date).toLocaleDateString() %>
+                        </div>
+                    </div>
+                    <% }); } else { %>
+                        <div class="auction-item">
+                            <h4>Prime Property Auction - Kigali</h4>
+                            <div class="auction-price">$500,000</div>
+                            <div class="auction-location"><i class="fas fa-map-marker-alt"></i> Kacyiru, Kigali</div>
+                            <div class="auction-end">Ends: 15/03/2026</div>
+                        </div>
+                        <div class="auction-item">
+                            <h4>Vehicle Auction - RRA</h4>
+                            <div class="auction-price">From $5,000</div>
+                            <div class="auction-location"><i class="fas fa-map-marker-alt"></i> Gikondo, Kigali</div>
+                            <div class="auction-end">Ends: 20/03/2026</div>
+                        </div>
+                        <% } %>
+            </div>
+
+            <!-- Column 3: Big News Per Day & Announcements -->
+            <div class="column">
+                <!-- Big News Per Day (changes while scrolling) -->
+                <h3 class="column-title"><i class="fas fa-calendar-day"></i> Big News Today</h3>
+                <div class="big-news" id="bigNewsDay">
+                    <% if (bigNews) { %>
+                        <img src="<%= bigNews.image_url || 'https://images.unsplash.com/photo-1559598467-f8b76c8155d0?w=500' %>"
+                            alt="<%= bigNews.title_en %>">
+                        <div class="big-news-overlay">
+                            <h3><a href="/article/<%= bigNews.id %>">
+                                    <%= bigNews.title_en %>
+                                </a></h3>
+                        </div>
+                        <% } else { %>
+                            <img src="https://images.unsplash.com/photo-1559598467-f8b76c8155d0?w=500" alt="Kigali">
+                            <div class="big-news-overlay">
+                                <h3><a href="#">Kigali named Africa's cleanest city for 5th consecutive year</a></h3>
+                            </div>
+                            <% } %>
+                </div>
+
+                <!-- Announcements Section -->
+                <h3 class="column-title"><i class="fas fa-bullhorn"></i> Announcements</h3>
+                <% if (announcements && announcements.length> 0) {
+                    announcements.forEach(ann => { %>
+                    <div class="announcement-item <%= ann.priority >= 5 ? 'high' : '' %>">
+                        <h4>
+                            <%= ann.title_en %>
+                        </h4>
+                        <p>
+                            <%= ann.content %>
+                        </p>
+                    </div>
+                    <% }); } else { %>
+                        <div class="announcement-item high">
+                            <h4>Public Holiday Announcement</h4>
+                            <p>Offices closed on Friday for Heroes Day</p>
+                        </div>
+                        <div class="announcement-item">
+                            <h4>New Museum Opening</h4>
+                            <p>Camp Kigali Museum opens next month</p>
+                        </div>
+                        <% } %>
+            </div>
+
+            <!-- Column 4: Vertical Banner Ad & Today in History -->
+            <div class="column">
+                <!-- Vertical Banner Ad (160x4000) -->
+                <div class="vertical-ad">
+                    <% if (ads && ads.find(a=> a.size_width === 160 && a.size_height === 4000)) { %>
+                        <img src="<%= ads.find(a => a.size_width === 160 && a.size_height === 4000).image_url %>"
+                            alt="Vertical Ad">
+                        <% } else { %>
+                            VERTICAL BANNER<br>160x4000
+                            <% } %>
+                </div>
+
+                <!-- Small 300x250 Ad -->
+                <div class="ad-space ad-300x250" style="margin: 20px 0;">
+                    <% if (ads && ads.find(a=> a.size_width === 300 && a.size_height === 250 && a.location ===
+                        'bottom')) { %>
+                        <img src="<%= ads.find(a => a.size_width === 300 && a.size_height === 250 && a.location === 'bottom').image_url %>"
+                            alt="Ad">
+                        <% } else { %>
+                            300x250 Ad
+                            <% } %>
+                </div>
+
+                <!-- Today in History -->
+                <h3 class="column-title"><i class="fas fa-history"></i> Today in History</h3>
+                <% if (history && history.length> 0) {
+                    history.forEach(item => { %>
+                    <div class="history-item">
+                        <div class="history-year">
+                            <%= item.year %>
+                        </div>
+                        <div class="history-event">
+                            <%= item.event_en %>
+                        </div>
+                    </div>
+                    <% }); } else { %>
+                        <div class="history-item">
+                            <div class="history-year">1994</div>
+                            <div class="history-event">Rwanda begins reconstruction after genocide</div>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-year">2008</div>
+                            <div class="history-event">Rwanda becomes first country with female majority parliament
+                            </div>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-year">2016</div>
+                            <div class="history-event">Kigali Convention Centre inaugurated</div>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>ONNIEONE NEWS</h4>
+                    <p style="color: #9ca3af;">Rwanda's Premier News Platform</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <ul>
+                        <% if (categories && categories.length> 0) {
+                            categories.slice(0, 5).forEach(cat => { %>
+                            <li><a href="/category/<%= cat.slug %>">
+                                    <%= cat.name_en %>
+                                </a></li>
+                            <% }); } %>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#"><i class="fab fa-youtube fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ONNIEONE NEWS. All rights reserved. Designed with <i class="fas fa-heart"
+                        style="color: #dc2626;"></i> in Rwanda</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Breaking News Slider - 2 second interval
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            if (slides.length > 0) {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+        }
+
+        if (slides.length > 0) {
+            setInterval(nextSlide, 2000);
+        }
+
+        // Big News Per Day - Change on Scroll
+        window.addEventListener('scroll', function () {
+            const bigNews = document.getElementById('bigNewsDay');
+            if (bigNews) {
+                const scrollPosition = window.scrollY;
+                // You can load different news based on scroll position via AJAX
+                if (scrollPosition > 500 && scrollPosition < 1000) {
+                    // Could load different news
+                } else if (scrollPosition > 1000) {
+                    // Could load another news
+                }
+            }
+        });
+    </script>
+    <script>
+        const btn = document.getElementById("mobileMenuBtn");
+        const menu = document.getElementById("navMenu");
+        if (btn && menu) {
+            btn.addEventListener("click", () => {
+                menu.classList.toggle("show");
+                const icon = btn.querySelector('i');
+                if (menu.classList.contains('show')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

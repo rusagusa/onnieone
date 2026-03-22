@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= t('Videos', 'Vidéos', 'Amafiye') %> - ONNIEONE News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            border-bottom: 3px solid #dc2626;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .page-header h1 span {
+            color: #dc2626;
+        }
+        
+        .videos-section {
+            padding: 60px 0;
+            background: #f9fafb;
+        }
+        
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        
+        .video-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(220,38,38,0.15);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: all 0.5s ease;
+        }
+        
+        .video-card:hover .video-thumbnail img {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #dc2626;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+        
+        .video-card:hover .play-icon {
+            background: #000;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .video-card-content {
+            padding: 20px;
+        }
+        
+        .video-card-content h3 {
+            color: #1f2937;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+        
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .video-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .video-meta i {
+            color: #dc2626;
+        }
+        
+        .no-videos {
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 12px;
+            color: #6b7280;
+        }
+        
+        .no-videos i {
+            font-size: 4rem;
+            color: #dc2626;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+    <div class="page-header">
+        <div class="container">
+            <h1><span><%= t('Video', 'Vidéo', 'Amafiye') %></span> <%= t('Gallery', 'Galerie', 'Ingero') %></h1>
+            <p><%= t('Watch our latest video content', 'Regardez nos dernières vidéos', 'Reba amafiya mashya') %></p>
+        </div>
+    </div>
+    
+    <section class="videos-section">
+        <div class="container">
+            <% if (videos && videos.length > 0) { %>
+                <div class="videos-grid">
+                    <% videos.forEach(video => { %>
+                        <a href="<%= video.video_url %>" target="_blank" class="video-card">
+                            <div class="video-thumbnail">
+                                <img src="<%= video.thumbnail_url || 'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=500' %>" alt="<%= video.title_en %>">
+                                <div class="play-icon">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <span class="duration"><%= video.duration || '5:00' %></span>
+                            </div>
+                            <div class="video-card-content">
+                                <h3><%= video.title_en %></h3>
+                                <div class="video-meta">
+                                    <span><i class="far fa-eye"></i> <%= video.views || 0 %> views</span>
+                                    <span><i class="far fa-calendar"></i> <%= new Date(video.created_at).toLocaleDateString() %></span>
+                                </div>
+                            </div>
+                        </a>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <div class="no-videos">
+                    <i class="fas fa-video"></i>
+                    <h3><%= t('No videos available', 'Aucune vidéo disponible', 'Nta mafiya aboneka') %></h3>
+                    <p><%= t('Check back soon for video content', 'Revenez bientôt pour du contenu vidéo', 'Garuka vuba urebe amafiya mashya') %></p>
+                </div>
+            <% } %>
+        </div>
+    </section>
+    
+    <%- include('partials/footer') %>
+</body>
+</html>
