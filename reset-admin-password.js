@@ -9,8 +9,13 @@ const db = new sqlite3.Database(dbPath, (err) => {
     if (err) { console.error('Could not connect to database:', err.message); process.exit(1); }
 });
 
-const adminUser = process.env.ADMIN_USER || 'admin';
-const adminPass = process.env.ADMIN_PASS || 'admin123';
+const adminUser = process.env.ADMIN_USER;
+const adminPass = process.env.ADMIN_PASS;
+
+if (!adminUser || !adminPass) {
+    console.error('❌ Error: ADMIN_USER or ADMIN_PASS not set in .env.');
+    process.exit(1);
+}
 
 const salt = bcrypt.genSaltSync(10);
 const hash = bcrypt.hashSync(adminPass, salt);

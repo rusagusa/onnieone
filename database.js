@@ -165,9 +165,14 @@ db.serialize(() => {
             cat[0], cat[1], cat[2], cat[3], index + 1);
     });
 
-    // Create admin user from ENV or default
-    const adminUser = process.env.ADMIN_USER || 'admin';
-    const adminPass = process.env.ADMIN_PASS || 'admin123';
+    // Create admin user from ENV
+    const adminUser = process.env.ADMIN_USER;
+    const adminPass = process.env.ADMIN_PASS;
+
+    if (!adminUser || !adminPass) {
+        console.warn('WARNING: ADMIN_USER or ADMIN_PASS not set in .env. Admin user creation skipped.');
+        return;
+    }
 
     // Check if admin exists to avoid re-hashing default password over changed one
     db.get('SELECT * FROM users WHERE username = ?', [adminUser], (err, row) => {
